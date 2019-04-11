@@ -1,0 +1,59 @@
+{% extends 'accounts/edit/base_edit.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block stylesheet %}
+    <!-- BOOTSTRAP-SELECT -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/css/bootstrap-select.min.css">
+    <!-- BOOTSTRAP-DATEPICKER -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
+{% endblock stylesheet %}
+
+{% block content%}
+    <div class="h-700 mb-5">
+        <h3>{{ title }}</h3>    
+        <div class="dropdown-divider"></div>
+        <p class="mb-4">
+            <small class="text-muted">{{ instructions }}</small>
+        </p>
+
+        <div class="card card-shadow-soft mb-3 border-top-0 border-right-0 border-left-0 text-dark">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" id="formUpload" novalidate="">
+                    {% csrf_token %}
+                    {% include 'includes/form_accounts.html' %}
+
+                    {% if title == 'Credenciales' %}
+                        <div class="form-group">
+                            <label class="mt-1">Contraseña:</label>
+                            <p>Puedes cambiar tu contraseña ingresando a este <a href="{% url 'accounts:settings_password_change'%}" class="btn btn-outline-dark btn-sm">link</a></p>
+                        </div>
+                    {% endif %}
+
+                    <div class="mt-4 text-right" role="group">
+                        <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+                    </div>
+                </form>      
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <!-- SELECT PICKER -->
+    <script src="{% static 'js/select-picker.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.es.min.js"></script>
+
+    <script type="text/javascript">
+        $('#id_birthday').datepicker({
+            startView: 2,
+            language: "es",
+            autoclose: true,
+            defaultViewDate: "01-01-1980",
+            startDate: "01-01-1920",
+            endDate: "01-01-2005",
+            format: "dd-mm-yyyy",
+        });
+    </script>
+{% endblock javascript %}

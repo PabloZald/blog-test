@@ -1,0 +1,94 @@
+{% extends 'accounts/edit/base_edit.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block message %}{% comment %}Overwrite message block{% endcomment %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.tags %}{{message.tags}}{% endif %} alert-dismissible fade show text-center rounded-0 mb-0 w-100" role="alert">
+                <span class="d-inline-block mb-0 align-middle mb-0">{{ message|safe }}</span>
+            </div>
+        {% endfor %}                          
+    {% endif %}
+{% endblock message %}
+{% block content%}
+        <h3>{{ title }}</h3>    
+        <div class="dropdown-divider"></div>
+         <p class="mb-4">
+            <small class="text-muted">{{ instructions }}</small>
+        </p>
+        {% comment %}   NO FUNCIONA PORQUE BORRA LOS OTROS CAMPOS AL SUBIRSE         
+            <div class="card card-shadow-soft border-0 text-dark mt-4">
+                <div class="card-body">
+                    {# 2. FILE INPUT TO BE USED BY THE PLUG-IN #}
+                    <input class="fileupload" type="file" name="about_image" multiple
+                           style="display: none;"
+                           data-url="{% url 'sites:settings_about' %}"
+                           data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+
+                    {# 3. TABLE TO DISPLAY THE UPLOADED PHOTOS #}
+                    <div class="mb-4">           
+                            <label for="id_about_image" class="d-block">Imagen de la sección Acerca de:</label>
+                            <div  class="js-current-image">
+                              {% if object.about_image %}<img src="{{ object.about_image.url }}" class='img-thumbnail w-75 d-block mx-auto mb-4'>{% endif %} 
+                            </div>
+                    </div>    
+
+                    <div class="d-flex justify-content-between ">
+                        {% if request.user.cabalahisite.about_image %}
+                            <button type="button" class="btn btn-outline-secondary btn-lg" data-toggle="modal" data-target="#exampleModal">
+                                Eliminar
+                            </button>
+                        {% endif %}
+                            <button type="button" class="btn btn-outline-primary btn-lg js-upload-photos">
+                                Actualizar imagen
+                            </button>
+                    </div>   
+                </div>
+            </div>
+        {% endcomment %}
+
+         <div class="card card-shadow-soft mt-4 border-0 text-dark">
+            <div class="card-body">
+
+       
+                <form method="POST" enctype="multipart/form-data" id="formUpload">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for error in form.non_field_errors %}
+                                <small><p {% if forloop.last %} class="mb-0" {% endif %}>{{ error }}</p></small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% for field in form %}              
+                        <div class="form-group mb-4">                                       
+                            
+                            {{ field.label_tag }}
+                            {{ field|add_validation_class }}
+                 
+
+                            {% for error in field.errors %}
+                                <div class="invalid-feedback">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary btn-lg mt-4 float-right">Guardar</button>
+                </form>      
+            </div>
+        </div>
+    {% comment %}        
+        {% include 'includes/edit_modal_delete_image.html'%}
+    {% endcomment %}
+{% endblock %}
+
+{% block javascript %}{% endblock javascript %}
+
+
+
+
+
+
+

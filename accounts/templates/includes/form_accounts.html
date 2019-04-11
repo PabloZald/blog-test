@@ -1,0 +1,54 @@
+{% load custom_filters %}
+
+{% if form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+        {% for error in form.non_field_errors %}
+            <small><p {% if forloop.last %} class="mb-0" {% endif %}>{{ error }}</p></small>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% for field in form %}
+    <div class="form-group mb-4">
+        {% if is_settings_general %}    
+            {% if field.auto_id == 'id_gender' %}
+                {{ field.label_tag }}
+                {{ field|addclass:'selectpicker form-control form-control-lg border' }}
+            {% else %}
+                {% if field.auto_id == 'id_birthday' %}
+                    {{ field.label_tag }}
+                    <div class="input-group mb-2">
+                        {{ field|add_validation_class }}
+                        <div class="input-group-append">
+                          <div class="input-group-text"><i class="fas fa-calendar "></i></div>
+                        </div>
+                    </div>
+                    <p class="mb-0 text-muted small">{{ field.help_text }}</p>
+                {% else %}
+                    {{ field.label_tag }}
+                    {{ field|add_validation_class }}
+                     <p class="mb-0 text-muted small">{{ field.help_text }}</p>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            {% if field.auto_id == 'id_academic_abbreviation_visible' %}
+            <div class="custom-control custom-checkbox d-block mb-4">
+                {{ field|addclass:'custom-control-input' }}
+                <label class="custom-control-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                <p class="mb-0 text-muted small">{{ field.help_text }}</p>
+            </div>
+            {% else %}
+                {{ field.label_tag }}
+                {{ field|add_validation_class }}
+                <small class="d-block mt-2 text-muted">{{ field.help_text|safe }}</small>
+            {% endif %}
+        {% endif %}
+
+        {% for error in field.errors %}
+            <div class="invalid-feedback">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+

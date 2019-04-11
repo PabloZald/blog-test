@@ -1,0 +1,159 @@
+{% extends 'accounts/edit/base_edit.html' %}
+{% load static %}
+{% load custom_filters %}
+ 
+{% block col_edit_form %}
+    <div class="col-12 col-md-5 py-3 text-dark">
+{% endblock col_edit_form %}
+
+{% block content%}
+    <div class="h-700 mb-5">
+        <h3>{{ title }}</h3>
+        <div class="dropdown-divider"></div>
+        <p class="mb-4">
+            <small class="text-muted">{{ instructions }}</small>
+        </p>
+        <div class="card card-shadow-soft mb-3 border-top-0 border-right-0 border-left-0 text-dark">
+          <div class="card-body">
+            {% if request.user.userprofile.profile_picture %}
+              <p>Foto de perfil actual:</p>
+              <img src="{{request.user.userprofile.profile_picture.url}}" class="img-thumbnail thumbnail-size-200 mb-3">
+            {% endif %} 
+
+            <form method="POST" enctype="multipart/form-data" id="formUpload">
+                {% csrf_token %}
+                {% for field in form %}
+                  <div class="form-group text-dark">
+                 {% comment %}
+                   
+                    {% if forloop.last %}
+                      {% if request.user.userprofile.profile_picture %}
+                        <div class="custom-control custom-checkbox d-block my-3">
+                          {{ field|addclass:'custom-control-input' }}
+                          <label class="custom-control-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                        </div>
+                      {% endif %}
+                    {% else %}
+                      {{ field.label_tag }}
+                      {{ field|addclass:"form-control" }}
+                    {% endif %}
+                 {% endcomment %}
+                    {% if field.auto_id == 'id_profile_picture' %}
+                      {{ field.label_tag }}
+                      {{ field|addclass:"form-control" }}
+                    {% else %}
+                      {{ field|addclass:"form-control" }}
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="invalid-feedback">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary btn-lg mt-2 float-right cursor-pointer">
+                    Guardar
+                </button>
+            </form>
+
+              <div class="modal fade" id="modalCrop">
+                  <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h4 class="modal-title">
+                                  Recortar foto
+                              </h4>
+
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+
+                          </div>
+                          <div class="modal-body p-5">
+                              <img src="" id="image" style="max-width: 100%;">
+                          </div>
+                          <div class="modal-footer">
+                              <div class="btn-group pull-left" role="group">
+                                  <button type="button" class="btn btn-outline-secondary js-zoom-out">
+                                      <i class="fas fa-minus"></i>
+                                  </button>
+                                  <button type="button" class="btn btn-outline-secondary js-zoom-in">
+                                      <i class="fas fa-plus"></i>
+                                  </button>
+                              </div>
+                              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                              <button type="button" class="btn btn-primary js-crop-and-upload">Guardar</button>
+                          </div>    
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div><!-- END COL -->
+{% endblock %}
+
+{% block javascript %}
+  {# JQUERY FILE UPLOAD SCRIPTS #}
+    <script src="{% static 'js/upload-icon-submit.js' %}"></script>
+
+  <script>
+    $(function () {
+
+      /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+      $("#id_profile_picture").change(function () {
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $("#image").attr("src", e.target.result);
+            $("#modalCrop").modal("show");
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      /* SCRIPTS TO HANDLE THE CROPPER BOX */
+      var $image = $("#image");
+      var cropBoxData;
+      var canvasData;
+      $("#modalCrop").on("shown.bs.modal", function () {
+        $image.cropper({
+          viewMode: 1,
+          aspectRatio: 1/1,
+          minCropBoxWidth: 300,
+          minCropBoxHeight: 300,
+          ready: function () {
+            $image.cropper("setCanvasData", canvasData);
+            $image.cropper("setCropBoxData", cropBoxData);
+          }
+        });
+      }).on("hidden.bs.modal", function () {
+        cropBoxData = $image.cropper("getCropBoxData");
+        canvasData = $image.cropper("getCanvasData");
+        $image.cropper("destroy");
+      });
+
+      $(".js-zoom-in").click(function () {
+        $image.cropper("zoom", 0.1);
+      });
+
+      $(".js-zoom-out").click(function () {
+        $image.cropper("zoom", -0.1);
+      });
+
+      /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+      $(".js-crop-and-upload").click(function () {
+        var cropData = $image.cropper("getData");
+        $("#id_x").val(cropData["x"]);
+        $("#id_y").val(cropData["y"]);
+        $("#id_height").val(cropData["height"]);
+        $("#id_width").val(cropData["width"]);
+        $("#formUpload").submit();
+      });
+
+    });
+  </script>
+{% endblock javascript %}
+
+
+

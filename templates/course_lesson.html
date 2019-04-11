@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <!--  HOME SECTION  -->
+    
+    <!-- BREADCRUMB -->
+    <section class="bg-brand">
+        <div class="container-fluid">
+            <div class="row py-6">
+                <div class="col-12">     
+                  <nav aria-label="breadcrumb" class="">
+                    <ol class="breadcrumb rounded-0 mb-0 bg-dark">
+                      <li class="breadcrumb-item"><a class="px-0 text-light" href="">Inicio</a></li>
+                      <li class="breadcrumb-item"><a class="px-0 text-light" href="">{qwqqwqw</a></li>
+                      <li class="breadcrumb-item"><a class="px-0 text-light" href="">{qweq</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">asas</li>
+                    </ol>
+                  </nav>
+                </div>
+            </div>
+
+            <div class="row">
+            </div>
+        
+            <div class="row">
+                <div class="col-12 col-md-9 my-auto pr-0">
+                    <div class="align-middle align-items-center text-center h-600 bg-dark"></div>
+                </div>
+                <div class="col-12 col-md-3 my-auto pl-0">
+                    <div class="align-middle align-items-center table-dark" style="overflow-y: auto; height:600px;">
+                        <div class="list-group text-white">
+                          <a href="#" class="active rounded-left-0 list-group-item rounded-0 list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Bienvenida <span class="ml-auto"><i class="far fa-play-circle "></i></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-left-0 border-right-0 d-flex justify-content-between align-items-center">Resumen <span class="ml-auto"><i class="far fa-play-circle "></i></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 1 <span class="ml-auto"><i class="fas fa-lock "></i></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 2 <span class="ml-auto"><i class="fas fa-lock "></i></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 3 <span class="ml-auto"><i class="fas fa-lock "></i></span></a>
+
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-left-0 border-right-0 d-flex justify-content-between align-items-center">Resumen <span class="ml-auto"><i class="fas fa-check "></i></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 1 <span class="ml-auto"><i class="fas fa-check "></i></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 2 <span class="ml-auto"><i class="fas fa-check "></i></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 3 <span class="ml-auto"><i class="fas fa-check "></i></span></a>
+
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-left-0 border-right-0 d-flex justify-content-between align-items-center">Resumen <span class="ml-auto"></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 1 <span class="ml-auto"></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 2 <span class="ml-auto"></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 3 <span class="ml-auto"></span></a>
+
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-left-0 border-right-0 d-flex justify-content-between align-items-center">Resumen <span class="ml-auto"></i></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 1 <span class="ml-auto"></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 2 <span class="ml-auto"></span></a>
+                          <a href="#" class="bg-transparent list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 3 <span class="ml-auto"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    </section>
+
+{% comment %}
+    <!--  CATEGORIES SECTION  -->
+        <section id="categories-section" class="bg-light flex-grow text-muted py-5">   
+            <div class="container-fluid">
+                        
+                    <h2 class="mb-5 text-center font-weight-light">Encontrá en nuestro directorio <strong>los mejores proveedores</strong>
+                    </h2>          
+                            
+                    <div class="row" >
+                            {% for group in categories_list %}
+                                <div class="col-12 col-sm-6 col-lg-3 mb-4">
+                                    <div class="card-categories-names card card-categories-names-height border-0 card-shadow-soft text-decoration-none text-muted" href="{{ site1.get_absolute_url }}" target="_blank">
+                                        
+                                            <ul class="list-unstyled mb-0 p-3">
+                                            {% for category in group %}
+                                                <li class="p-2">
+                                                    <a href="?qr={{ category }}" class="{% if category|length > 33 %}small{% endif %}" >
+                                                        {{ category }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                            </ul>
+                                        
+                                    </div>
+                                </div>   
+                            {% endfor %}
+                    </div>
+
+                    <div class="text-center pt-3">
+                        <small class="text-muted">¿No encuentras tu categoría?</small>
+                        <a href="{% url 'contact' %}?next={{ request.path|urlencode }}" class="btn btn-outline-secondary btn-sm ml-3">Contáctanos</a>
+                    </div>            
+            </div>
+        </section>
+{% endcomment %}
+
+    <!--  OUT OF THE BOX  SECTION  -->
+</header>
+{% endblock content %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+
+
+
+
+
+

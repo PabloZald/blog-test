@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block title %}{{ object.title }} - Saludemy{% endblock title %}
+
+{% block content %}
+    <!--  HOME SECTION  -->
+    {% if not object.image %} 
+        <header class="h-300 bg-brand py-5 "  style="background: url('https://images.unsplash.com/photo-1467685790346-20bfe73a81f0?auto=format&fit=crop&w=1650&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D 1650w, ')no-repeat; 
+                                                    background-color: rgba(0, 0, 0, 0);
+                                                    background-attachment: scroll;
+                                                    background-size: auto auto;
+                                                    background-size: cover;
+                                                    background-attachment: fixed; position:relative;">
+            <div class="d-flex justify-content-center banner-dark-overlay align-items-center text-center">
+                <div class="col-12 col-md-7 my-auto">
+                    <h1 class="text-white d-block display-4">{{ object.title }}</h1>
+                    <p class="lead text-white d-block mb-0">{{ object.user_full_name }}</p>
+                    <i class="far fa-play-circle text-white mt-3" style="font-size:7rem;"></i>
+                </div> 
+            </div> 
+    
+        </header>
+
+    {% else %}
+        <header class="h-300 bg-brand py-5"  style="background: url('{{object.image.url}}')no-repeat; 
+                                                    background-color: rgba(0, 0, 0, 0);
+                                                    background-attachment: scroll;
+                                                    background-size: auto auto;
+                                                    background-size: cover;
+                                                    background-attachment: fixed; position:relative;">
+
+            <div class="banner-dark-overlay ">
+                <div class="container h-100">
+                    <div class="row  h-100">
+                        <div class="col-12 col-md-7 col-lg-8 mt-7">
+                        <h1 class="text-white d-block">{{ object.title }}</h1>
+                        <p class="lead text-white d-block mb-0">{{ object.user_full_name }}</p>
+                        </div> 
+
+                        <div class="d-none d-lg-block col-md-5 col-lg-4 pt-3">
+                             <div class="card shadow">
+                                    <i class="far fa-6x fa-play-circle text-white mt-3" style="position:absolute; top: 3rem; left:8rem;"></i>
+                                    <img class="card-img-top" src="{{course.image.url}}" alt="Sucursal Digital de MiaBela">
+                                    {% if object.is_owner %}
+                                        <div class="card-body">
+                                            <a href="{{lecture_1.get_absolute_url}}" class="btn btn-primary btn-block btn-xlg">Ir al curso</a>
+                                            {% if certificate %}
+                                                <a href="{% url 'courses:show-certificate' slug=object.slug %}?download=true" class="btn btn-outline-primary btn-block btn-xlg">Descargar certificado</a>
+                                            {% endif %}
+                                        </div>
+                                    {% else %}
+                                        <div class="card-body">
+                                            {% if object.list_price %}    
+                                                {% if object.price %}        
+                                                    <h2 class="brand-text"><span class="text-muted mr-3"><s>${{object.list_price}}</s></span>${{ object.price }}</h2>
+                                                {% else %}
+                                                    <h2 class="brand-text">${{ object.list_price }}</h2>
+                                                {% endif %}               
+                                                <p class="text-danger">¡Esta oferta termina en 3 horas!</p>
+                                                <a href="{% if user.is_authenticated %}{{object.get_purchase_url}}{%else%}{% url 'courses:signup-login' courseslug=course.slug%}{% endif %}" class="btn btn-primary btn-block btn-xlg">Comprar ahora</a>
+                                            {% else %}
+                                                <a href="{{lecture_1.get_absolute_url}}" class="btn btn-primary btn-block btn-xlg">Ir al curso</a>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                             </div>
+                        </div>
+                        {% comment %}
+                            
+                        <div class="class" style="position:relative;width:300px; height:500px; ">
+                            <div class="card bg-dark mt-7" style="width:300px; height:500px; position:absolute;"></div>
+                        </div>
+                        {% endcomment %}
+
+                        
+                    </div> 
+                </div>
+            </div> 
+        </header>   
+    {% endif %}
+    <!--  WEB SAMPLES SECTION  --> 
+   
+    <section id="sucursalsamples" class="bg-white flex-grow pt-6 brand-text">   
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-lg-8 my-auto my-auto">
+                            <div class="row">
+                                <div class="col-12 my-auto my-auto">
+                                    <h2 class="brand-text">Por qué tomar el curso</h2>
+                                    <p class="brand-text my-4">{{ object.description|linebreaks }}</p>
+                                </div>
+  
+                             <div class="col-12 my-auto my-auto">
+                                    <h2 class="brand-text mb-4 mt-6">Contenido del curso</h2>
+
+                                    <div class="accordion" id="accordionExample">
+                                        {% for obj in object.topics.all  %}
+                                            <div class="card cursor-pointer"  data-toggle="collapse" data-target="#collapse{{obj.id}}" aria-expanded="false" aria-controls="collapseOne" >
+                                                <div class="card-header px-0" id="heading{{obj.id}}">
+                                                    <h6 class="mb-0 px-3 py-2">
+                                                        <i class="fas fa-plus mr-2"></i>{{obj.title}}
+                                                    </h6>
+                                                </div>
+
+                                                <div id="collapse{{obj.id}}" class="collapse" aria-labelledby="heading{{obj.id}}" data-parent="#accordionExample">
+                                                    <div class="list-group">
+                                                        {% for lecture in obj.lecture_set.all  %}
+                                                            {% if lecture.free or object.is_owner %}
+                                                                <a href="{{lecture.get_absolute_url}}" class="list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">{{lecture.title}} <span class="ml-auto"><i class="far fa-play-circle "></i></span></a>
+                                                            {% else %}
+                                                                <p class="mb-0 list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">{{lecture.title}} <span class="ml-auto"><i class="fas fa-lock "></i></span></p>
+                                                            {% endif %}   
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {%endfor%}  
+                                    </div>
+                            </div>   
+
+
+                            {% if review_list %}
+                                <div class="col-12">
+                                    <h2 class="brand-text mb-4 mt-6">Reseñas</h2>
+                                    {% for element in review_list%}
+                                        <div class="border border-right-0 border-left-0 border-top-0 py-3">
+                                            <a class="text-decoration-none brand-text" href="{{element.user.userprofile.get_absolute_url}}" >
+                                                {% if element.user.userprofile.profile_picture %}
+                                                    <img src="{{ element.user.userprofile.profile_picture.url }}" alt="{{ element.user.userprofile.profile_picture.user_full_name }}" class="mr-1 rounded-circle profile-no-picture-small">
+                                                {% else %}
+                                                    <div href="#" class="text-white mr-1 bg-secondary rounded-circle profile-no-picture-small d-inline-block text-decoration-none">{{element.user.first_name|slice:":1"}}</div>
+                                                {% endif %}
+                                                {{ element.user.userprofile.user_full_name }}
+                                            </a>
+                                            <div class="d-inline-block ml-0 ml-sm-2">
+                                            {% if element.rating == 5 %}
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                            {% endif %}
+                                            {% if element.rating == 4 %}
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-black-50"></i>
+                                            {% endif %}
+                                            {% if element.rating == 3 %}
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-black-50"></i>
+                                                <i class="fas fa-star text-black-50"></i>
+                                            {% endif %}
+                                            {% if element.rating == 2 %}
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-black-50"></i>
+                                                <i class="fas fa-star text-black-50"></i>
+                                                <i class="fas fa-star text-black-50"></i>
+                                            {% endif %}
+                                            {% if element.rating == 1 %}
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-black-50"></i>
+                                                <i class="fas fa-star text-black-50"></i>
+                                                <i class="fas fa-star text-black-50"></i>
+                                                <i class="fas fa-star text-black-50"></i>
+                                            {% endif %}
+                                            </div>
+                                            <p class="my-2">{{element.comment}}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                                <div class="col-12 my-auto my-auto">
+                                    <h2 class="brand-text mb-4 mt-6">Información del instructor</h2>
+                                </div>
+                                <div class="col-12 col-md-4 pr-0 text-center text-md-left">
+                                    {% if object.userprofile.image %}
+                                        <a class="" href="{{object.user.userprofile.get_absolute_url}}">
+                                            <img src="{{ object.user.userprofile.image.url }}" alt="{{ object.user_full_name }}" class="img-thumbnail rounded-circle">
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="{{object.user.userprofile.get_absolute_url}}">
+                                            <img class="img-thumbnail rounded-circle" src="{% static 'imagen-muestra-200px.png' %}">
+                                        </a>
+                                    {% endif %} 
+                                    <a class="my-3 text-muted d-block" href="{{object.user.userprofile.get_absolute_url}}"><i class="far fa-file-alt "></i><span class="ml-2">VER PERFIL COMPLETO</span></a>
+                                    {% comment %}
+                                        <p class="my-3 text-muted"><i class="far fa-play-circle "></i><span class="ml-2">21 CURSOS</span></p>         
+                                        <i class="fas fa-star text-warning small d-inline-block"></i> 
+                                        <p class="ml-2 d-inline-block mb-0 text-secondary small">4.5 calificación del instructor</p>
+                                    {% endcomment %}
+                                    
+                                </div>
+                                <div class="col-12 col-md-8 text-center text-md-left mt-4 mt-md-0">
+                                    <h3>{{object.user_full_name}}</h3>
+                                    {% if object.user.userprofile.speciality %}
+                                        <p class="lead">{{object.user.userprofile.speciality}}</p>
+                                    {% endif %}
+                                    <p class="text-left">
+                                        {% with description=object.user.userprofile.description|linebreaks  %}
+                                            {{description|truncatewords:115}}
+                                        {% endwith %}
+                                    </p>                            
+                                </div>
+                             
+                                <div class="col-12">
+                                    <h2 class="brand-text mb-4 mt-6">Lo que obtendrás</h2>
+                                    <p>Certificado oficial de cumplimiento del curso el cual podrás descargar e imprimir.</p>      
+                                    {% if object.certificate_sample %}
+                                        <img class="w-100 shadow" src="{{object.certificate_sample.url}}">
+                                    {% else %}
+                                        <img class="w-100 shadow" src="{% static 'certificate-sample.png' %}">
+                                    {% endif %}
+                                </div>
+                                    {% if object.list_price %}
+                                        {% if object.is_owner %}
+                                            <div class="col-12">
+                                            <div class="justify-content-center my-5">
+                                                <a href="{{lecture_1.get_absolute_url}}" class="btn btn-primary btn-block btn-xlg shadow">Ir al curso</a>
+                                            </div>
+                                        </div>
+                                        {% else %}
+                                            {% if object.price %}        
+                                                <div class="col-12 col-md-7 my-7">
+                                                    <h2 class="brand-text">Empieza ahora por solo</h2>                      
+                                                    <h2 class="brand-text"><span class="text-muted mr-3"><s>${{object.list_price}}</s></span>${{ object.price }}</h2>
+                                                </div>
+                                                <div class="col-12 col-md-5 my-auto">
+                                                    <a href="{{object.get_purchase_url}}" class="btn btn-primary btn-block btn-xlg shadow">Comprar por ${{ object.price }}</a>
+                                                </div>
+                                            {% else %}
+                                                <div class="col-12 col-md-7 my-7">
+                                                    <h2 class="brand-text">Empieza ahora por solo</h2>                      
+                                                    <h2 class="brand-text">${{ object.list_price }}</h2>
+                                                </div>
+                                                <div class="col-12 col-md-5 my-auto">
+                                                    <a href="{{object.get_purchase_url}}" class="btn btn-primary btn-block btn-xlg shadow">Comprar por ${{ object.list_price }}</a>
+                                                </div>
+                                            {% endif %}
+                                            <div class="col-12 my-auto">
+                                                <div class="dropdown-divider"></div>
+                                            </div>
+                                            <div class="col-12 col-md-3 my-7">
+                                                <h6 class="text-secondary mb-0">Pago seguro por</h6>  
+                                            </div>
+                                            <div class="col-4 col-md-3 my-md-auto mb-5">
+                                                <img class="w-100" src="{% static 'bank-transfer-logo.png' %}">  
+                                            </div>
+                                            <div class="col-4 col-md-3 my-md-auto mb-5">
+                                                <img class="w-100" src="{% static 'visa-mastercard-logo.png' %}">  
+                                            </div>
+                                            <div class="col-4 col-md-3 my-md-auto mb-5">
+                                                <img class="w-100" src="{% static 'paypal-logo.png' %}">  
+                                            </div>
+                                        {% endif %}
+                                    {% else %}
+                                        <div class="col-12">
+                                            <div class="justify-content-center my-5">
+                                                <a href="{{lecture_1.get_absolute_url}}" class="btn btn-primary btn-block btn-xlg shadow">Ir al curso</a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                            </div>      
+                        </div>
+                    </div>
+                </div>
+    </section>
+{% endblock content %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+
+
+
+
+
+

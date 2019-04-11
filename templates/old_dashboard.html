@@ -1,0 +1,515 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <!--  HOME SECTION  -->
+    <header class=" bg-brand py-5 shadow">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-md-7">
+                            <div class="d-flex flex-row justify-content-center justify-content-md-start">
+                                <a href="{{ user.cabalahisite.get_absolute_url }}" class="text-white bg-secondary rounded-circle profile-no-picture-medium d-inline-block text-decoration-none">{{user.first_name|slice:":1"}}N</a>
+                                <div class="ml-3 d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block">Nombre del usuario</h3>
+                                    <p class="small text-white d-block mb-0">Médico especialista en Psiquiatría</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <div class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">1</h3>
+                                    <p class="small text-white d-block mb-0">Cursos en progreso</p>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <div class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">3</h3>
+                                    <p class="small text-white d-block mb-0">Mis <br/>certificados</p>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <div class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">5</h3>
+                                    <p class="small text-white d-block mb-0">Mis <br/>cursos</p>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <div class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">3</h3>
+                                    <p class="small text-white d-block mb-0">Insignias <br/>obtenidas</p>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <div class="d-inline-block my-auto">
+                                    <h3 class="text-danger d-inline-block mb-1">50%</h3>
+                                    <p class="small text-white d-block mb-0">Perfil completo</p>
+                                </div>
+                            </div>    
+                        </div>
+                    
+                    </div>
+                </div>
+    </header>
+{% comment %}
+    <section id="conversion" class="flex-grow mb-4 bg-white shadow py-5">   
+        <div class="container-fluid">
+            <div class="row" >        
+                <div class="col-4">
+                    <h3 class="brand-text d-inline-block">Programas y cursos</h3>
+                </div>
+                <div class="col-8">
+                    <div class="input-group w-100">
+                        <input type="search" id="search-input" placeholder="¿Qué deseas aprender?" class="form-control bg-light border-0 rounded-0 py-3" value="{% if category_name %}{{category_name}}{% endif %}" />
+                        <span class="input-group-append">
+                            <button class=" disabled btn btn-secondary" type="button">
+                                <img class="border-0 rounded-0" src="{% static 'icons/search_icon_white.svg' %}">
+                            </button>
+                        </span>
+                        <div id="search-result-container w-100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endcomment %}
+
+
+    <section id="conversion" class="flex-grow py-4" style="background: url('{% static 'homepage-texture-background.svg' %}') top/contain repeat-y;">   
+        <div class="container-fluid">
+            
+            <div class="row" >        
+                <div class="col-12 col-md-2 pl-0">
+                    <div class="d-flex flex-column px-4 bg-white shadow  py-3">
+                        <p class="mb-2 small font-weight-bold" href="#">Categorías</p>
+                        <div class="ml-3 navbar-light height-100vh">
+                           <ul class="navbar-nav">
+                            <li class="nav-item {{ is_settings_credentials }}">
+                              <a class="nav-link px-0 {{ is_settings_credentials }}" href="">
+                                Anestesiología</a>
+                            </li>
+
+                              <li class="nav-item {{ is_settings_add_on }}">
+                                <a class="nav-link px-0 {{ is_settings_add_on }} brand-text" href="{">
+                                  Administración</a>
+                              </li>
+
+                            <li class="nav-item {{ is_settings_general }}">
+                              <a class="nav-link px-0 {{ is_settings_general }}" href="">
+                                Cardiología</a>
+                            </li>
+                            <li class="nav-item {{ is_logo_info }}">
+                              <a class="nav-link px-0 {{ is_logo_info }}" href="">
+                                Enfermería</a>
+                            </li>
+                            <li class="nav-item {{ is_settings_credentials }}">
+                              <a class="nav-link px-0 {{ is_settings_credentials }}" href="">
+                                Anestesiología</a>
+                            </li>
+
+                              <li class="nav-item {{ is_settings_add_on }}">
+                                <a class="nav-link px-0 {{ is_settings_add_on }} " href="{">
+                                  Administración</a>
+                              </li>
+
+                            <li class="nav-item {{ is_settings_general }}">
+                              <a class="nav-link px-0 {{ is_settings_general }}" href="">
+                                Cardiología</a>
+                            </li>
+                            <li class="nav-item {{ is_logo_info }}">
+                              <a class="nav-link px-0 {{ is_logo_info }}" href="">
+                                Enfermería</a>
+                            </li>
+                            <li class="nav-item {{ is_settings_credentials }}">
+                              <a class="nav-link px-0 {{ is_settings_credentials }}" href="">
+                                Anestesiología</a>
+                            </li>
+
+                              <li class="nav-item {{ is_settings_add_on }}">
+                                <a class="nav-link px-0 {{ is_settings_add_on }} " href="{">
+                                  Administración</a>
+                              </li>
+
+                            <li class="nav-item {{ is_settings_general }}">
+                              <a class="nav-link px-0 {{ is_settings_general }}" href="">
+                                Cardiología</a>
+                            </li>
+                            <li class="nav-item {{ is_logo_info }}">
+                              <a class="nav-link px-0 {{ is_logo_info }}" href="">
+                                Enfermería</a>
+                            </li>
+                            <li class="nav-item {{ is_settings_credentials }}">
+                              <a class="nav-link px-0 {{ is_settings_credentials }}" href="">
+                                Anestesiología</a>
+                            </li>
+
+                              <li class="nav-item {{ is_settings_add_on }}">
+                                <a class="nav-link px-0 {{ is_settings_add_on }} " href="{">
+                                  Administración</a>
+                              </li>
+
+                            <li class="nav-item {{ is_settings_general }}">
+                              <a class="nav-link px-0 {{ is_settings_general }}" href="">
+                                Cardiología</a>
+                            </li>
+                            <li class="nav-item {{ is_logo_info }}">
+                              <a class="nav-link px-0 {{ is_logo_info }}" href="">
+                                Enfermería</a>
+                            </li>
+                            <li class="nav-item {{ is_settings_credentials }}">
+                              <a class="nav-link px-0 {{ is_settings_credentials }}" href="">
+                                Anestesiología</a>
+                            </li>
+
+                              <li class="nav-item {{ is_settings_add_on }}">
+                                <a class="nav-link px-0 {{ is_settings_add_on }} " href="{">
+                                  Administración</a>
+                              </li>
+
+                            <li class="nav-item {{ is_settings_general }}">
+                              <a class="nav-link px-0 {{ is_settings_general }}" href="">
+                                Cardiología</a>
+                            </li>
+                            <li class="nav-item {{ is_logo_info }}">
+                              <a class="nav-link px-0 {{ is_logo_info }}" href="">
+                                Enfermería</a>
+                            </li>
+                            <li class="nav-item {{ is_settings_credentials }}">
+                              <a class="nav-link px-0 {{ is_settings_credentials }}" href="">
+                                Anestesiología</a>
+                            </li>
+
+                              <li class="nav-item {{ is_settings_add_on }}">
+                                <a class="nav-link px-0 {{ is_settings_add_on }} " href="{">
+                                  Administración</a>
+                              </li>
+
+                            <li class="nav-item {{ is_settings_general }}">
+                              <a class="nav-link px-0 {{ is_settings_general }}" href="">
+                                Cardiología</a>
+                            </li>
+                            <li class="nav-item {{ is_logo_info }}">
+                              <a class="nav-link px-0 {{ is_logo_info }}" href="">
+                                Enfermería</a>
+                            </li>
+                            <li class="nav-item {{ is_settings_credentials }}">
+                              <a class="nav-link px-0 {{ is_settings_credentials }}" href="">
+                                Anestesiología</a>
+                            </li>
+
+                              <li class="nav-item {{ is_settings_add_on }}">
+                                <a class="nav-link px-0 {{ is_settings_add_on }} " href="{">
+                                  Administración</a>
+                              </li>
+
+                            <li class="nav-item {{ is_settings_general }}">
+                              <a class="nav-link px-0 {{ is_settings_general }}" href="">
+                                Cardiología</a>
+                            </li>
+                            <li class="nav-item {{ is_logo_info }}">
+                              <a class="nav-link px-0 {{ is_logo_info }}" href="">
+                                Enfermería</a>
+                            </li>
+                            <li class="nav-item {{ is_settings_credentials }}">
+                              <a class="nav-link px-0 {{ is_settings_credentials }}" href="">
+                                Anestesiología</a>
+                            </li>
+
+                              <li class="nav-item {{ is_settings_add_on }}">
+                                <a class="nav-link px-0 {{ is_settings_add_on }} " href="{">
+                                  Administración</a>
+                              </li>
+
+                            <li class="nav-item {{ is_settings_general }}">
+                              <a class="nav-link px-0 {{ is_settings_general }}" href="">
+                                Cardiología</a>
+                            </li>
+                            <li class="nav-item {{ is_logo_info }}">
+                              <a class="nav-link px-0 {{ is_logo_info }}" href="">
+                                Enfermería</a>
+                            </li>
+
+                          </ul>
+                        </div>
+                    </div>    
+                </div>
+
+                <div class="col-12  col-md-9">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow text-decoration-none shadow" href="http://www.miabela.com" target="_blank" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=0" alt="Sucursal Digital de MiaBela">
+                                    <div class="card-body">
+                                      <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted ">Dr. Lorena Carranza</p>
+                                      <div class="d-flex flex-row justify-content-between">
+                                            <div>
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i>
+                                            </div>    
+                                            <p class="card-text  mb-0 text-primary">En curso</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow  text-decoration-none shadow" href="{{ site1.get_absolute_url }}" target="_blank" rel="nofollow" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=92" alt="Sucursal Digital de Restaurante Exquisito Grill">
+                                    <div class="card-body">
+                                      <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted">Dr. Lorena Carranza</p>
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <div>
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i>
+                                            </div>    
+                                            <p class="card-text  mb-0 text-dark">Gratis</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow  text-decoration-none shadow" href="http://gyrauditores.com" target="_blank" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=23" alt="Sucursal Digital de G&R Auditores">
+                                    <div class="card-body">
+                                      <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted">Dr. Lorena Carranza</p>
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <div>
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i>
+                                            </div>    
+                                            <p class="card-text  mb-0 text-dark">$29.99</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow  text-decoration-none shadow" href="{{site2.get_absolute_url}}" target="_blank" rel="nofollow" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=74" alt="Sucursal Digital del Centro Integral de Salud">
+                                    <div class="card-body">
+                                     <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted">Dr. Lorena Carranza</p>
+                                      <div class="d-flex flex-row justify-content-between">
+                                            <div>
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i>
+                                            </div>    
+                                            <p class="card-text  mb-0 text-dark">$19.99</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow  text-decoration-none text-muted shadow" href="{{site3.get_absolute_url}}" target="_blank" rel="nofollow" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=55" alt="Sucursal Digital de Vital SPA">
+                                    <div class="card-body">
+                                      <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted">Dr. Lorena Carranza</p>
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <div>
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-secondary"></i>
+                                            </div>    
+                                            <p class="card-text  mb-0 text-primary">En curso</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow  text-decoration-none  shadow" href="{{site4.get_absolute_url}}" target="_blank" rel="nofollow" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=36" alt="Sucursal Digital de Paraíso Resort">
+                                    <div class="card-body">
+                                      <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted ">Dr. Lorena Carranza</p>
+                                      <div class="d-flex flex-row justify-content-end">
+                                      
+                                        <p class="card-text  mb-0 text-success">Próximamente 27/05/19</p>
+                                      </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                              <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow  text-decoration-none shadow" href="{{site2.get_absolute_url}}" target="_blank" rel="nofollow" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=74" alt="Sucursal Digital del Centro Integral de Salud">
+                                    <div class="card-body">
+                                     <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted">Dr. Lorena Carranza</p>
+                                      <div class="d-flex flex-row justify-content-between">
+                                            <div>
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i>
+                                            </div>    
+                                            <p class="card-text  mb-0 text-dark">$19.99</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow  text-decoration-none text-muted shadow" href="{{site3.get_absolute_url}}" target="_blank" rel="nofollow" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=55" alt="Sucursal Digital de Vital SPA">
+                                    <div class="card-body">
+                                      <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted">Dr. Lorena Carranza</p>
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <div>
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-secondary"></i>
+                                            </div>    
+                                            <p class="card-text  mb-0 text-primary">En curso</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow  text-decoration-none  shadow" href="{{site4.get_absolute_url}}" target="_blank" rel="nofollow" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=36" alt="Sucursal Digital de Paraíso Resort">
+                                    <div class="card-body">
+                                      <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted ">Dr. Lorena Carranza</p>
+                                      <div class="d-flex flex-row justify-content-end">
+                                      
+                                        <p class="card-text  mb-0 text-success">Próximamente 27/05/19</p>
+                                      </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                              <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow  text-decoration-none shadow" href="{{site2.get_absolute_url}}" target="_blank" rel="nofollow" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=74" alt="Sucursal Digital del Centro Integral de Salud">
+                                    <div class="card-body">
+                                     <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted">Dr. Lorena Carranza</p>
+                                      <div class="d-flex flex-row justify-content-between">
+                                            <div>
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i>
+                                            </div>    
+                                            <p class="card-text  mb-0 text-dark">$19.99</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow  text-decoration-none text-muted shadow" href="{{site3.get_absolute_url}}" target="_blank" rel="nofollow" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=55" alt="Sucursal Digital de Vital SPA">
+                                    <div class="card-body">
+                                      <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted">Dr. Lorena Carranza</p>
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <div>
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-warning"></i> 
+                                                <i class="fas fa-star text-secondary"></i>
+                                            </div>    
+                                            <p class="card-text  mb-0 text-primary">En curso</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-lg-4 mb-5">
+                                <a class="card border-0 color grow  text-decoration-none  shadow" href="{{site4.get_absolute_url}}" target="_blank" rel="nofollow" rel="noopener">
+                                    <img class="card-img-top" src="https://picsum.photos/300/200/?image=36" alt="Sucursal Digital de Paraíso Resort">
+                                    <div class="card-body">
+                                      <h6 class="card-title mb-2 text-dark">Dietas y cuidados básicos para embarazadas</h6>
+                                      <p class="card-text text-muted mb-2">Dr. Lorena Carranza</p>
+                                      <div class="d-flex flex-row justify-content-end">
+                                      
+                                        <p class="card-text  mb-0 text-success">Próximamente 27/05/19</p>
+                                      </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+              
+            </div>
+        </div>
+    </section>
+
+    <section id="conversion" class="flex-grow bg-white shadow py-5">   
+        <div class="container-fluid">
+            <div class="row" >   
+                <div class="col-3 text-center">
+                    <img class="w-75 ml-auto" src="{% static 'icons/teaching-ad.png' %}" alt="Sucursal Digital de Paraíso Resort">
+                </div>
+                <div class="col-12 col-md-6 my-auto">
+                    <h3 class="brand-text d-inline-block">Enseña en línea</h3>
+                    <p class="mb-0">Comparte tus conocimientos y gana prestigio e ingresos extra. Contáctanos y dinos que curso o conferencia te gustaría impartir.</p>
+                </div>
+                <div class="col-12 col-md-3 my-auto">
+                    <a href="" class="btn btn-outline-primary btn-block btn-xlg mx-auto">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+{% endblock content %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+
+
+
+{% comment %}
+  nutricion en el paciente diabetico
+  cuidado hijos
+  hipertencion
+  Soporte Nutricional en paciente postquirurgico.
+  Como leer un electrocardiograma
+{% endcomment %}
+
+
+
+
+
+
+

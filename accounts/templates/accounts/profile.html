@@ -1,0 +1,338 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% load static %}
+{% block title %}{{ userprofile.user_full_name}} - Saludemy{% endblock title %}
+
+{% block stylesheet %}
+   
+{% endblock stylesheet %}
+
+
+{% block content %}
+
+    <section id="" class="bg-light flex-grow my-3">   
+            <div class="container-fluid">
+
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-lg-8">
+                            <div class="card mb-3 border-top-0 border-right-0 border-left-0 shadow">
+                                       <div class="" style="height: 200px; width: auto; overflow: hidden;">
+                                         {% comment %}<div class="" style="height: 220px; width: auto; overflow: hidden;">{% endcomment %}
+                                            {% if userprofile.banner %}
+                                                <div class="card-img-top" 
+                                                    style="background: url(' {{ userprofile.banner.url }} ')no-repeat; 
+                                                    background-color: rgba(0, 0, 0, 0);
+                                                    background-attachment: scroll;
+                                                    background-size: auto auto;
+                                                    min-height: 458px;
+                                                    background-size: cover;
+                                                    background-attachment: fixed;">
+                                                </div>
+                                            {% else %}
+                                               
+                                                <div class="card-img-top" 
+                                                    style="background: url('{% static "profile-background.jpg" %}')no-repeat; 
+                                                    background-color: rgba(0, 0, 0, 0);
+                                                    background-attachment: scroll;
+                                                    background-size: auto auto;
+                                                    min-height: 450px;
+                                                    background-size: cover;
+                                                    background-attachment: fixed;">
+                                                </div>
+                                                {% comment %}
+                                                 <span class="profile-no-picture-medium d-block card-img-top " style="background-color: {% random_color %}; height: 100%; width: auto; line-height: 220px;">
+                                                     {{ userprofile.user.first_name|slice:":1" }} 
+                                                </span>
+                                                {% endcomment %}
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="card-img-overlay p-0 mx-auto" style="height: 185px; width: 185px; overflow: hidden; margin-top: 6.5rem;">
+                                            {% if userprofile.profile_picture %}
+                                                <img src="{{ userprofile.profile_picture.url }}" width="100%" height="auto" alt="{{ user.user_full_name }}" class="img-thumbnail rounded-circle">
+                                            {% else %}
+                                                <div class="img-thumbnail rounded-circle"> {% comment %} Crea una imagen si el usuario no tiene foto de perfil {% endcomment %}
+                                                    <div class="profile-no-picture-large rounded-circle bg-primary">
+                                                        {{ userprofile.user.first_name |slice:":1" }}
+                                                    </div>
+                                                </div>
+                                            {% endif %} 
+                                        </div>
+
+
+                                        <div class="row pt-5 text-center text-md-left">  
+                                                <div class="col-12 col-md-6 mt-5 mt-md-3">                        
+                                                    <h4 class="ml-md-3 my-0 py-1 ">{{ userprofile.user_full_name}}</h4>
+                                                    <p class="ml-md-3 text-muted mb-0 mt-1 lead">{{userprofile.speciality}}</p>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-3">
+                                                    <div class="btn-group float-md-right mr-md-3" role="group" aria-label="Profile controls">
+                                                        {% if userprofile.user == request.user and request.user.is_authenticated %}
+                                                            
+                                                                {% if userprofile.image %}
+                                                                    <a href="{% url 'accounts:settings_general' %}" class="btn btn-outline-secondary btn-sm">Editar perfil</a>
+                                                                    {% if user_post_list %}
+                                                                        <a href="{% url 'accounts:author_posts' userprofile.user.pk %}" class="btn btn-outline-secondary btn-sm">Publicaciones</a>
+                                                                    {% endif %}
+                                                                    <a href="{% url 'accounts:new_user_post' %}" class="btn btn-secondary btn-sm">Publicar</a>
+                                                                {% else %}
+                                                                    <a href="{% url 'accounts:settings_general' %}" class="btn btn-primary btn-lg">Editar perfil</a>
+                                                                {% endif %}
+
+                                                        {% else %}
+                                                            {% if user_post_list %}
+                                                                        <a href="{% url 'accounts:author_posts' userprofile.user.pk %}" class="btn btn-outline-secondary btn-sm">Publicaciones</a>
+                                                            {% endif %}
+                                                            {% comment %}
+                                                                
+                                                            <a href="{% url 'accounts:contact_user'  userprofile.slug %}" class="btn btn-secondary btn-sm">Enviar correo</a>
+                                                            {% endcomment %}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="d-flex flex-column flex-lg-row bg-white justify-content-between p-3 mt-3">
+                                                        {% if userprofile.phone %}
+                                                            <p class="mb-0 d-inline-block py-2 py-lg-0">
+                                                                <i class="fas fa-phone align-middle mr-2 icon_xs"></i>
+                                                                {{ userprofile.phone|phone_number }}     
+                                                            </p>
+                                                        {% endif %}
+                                                        {% if userprofile.whatsapp %}
+                                                            <p class="mb-0 d-inline-block py-2 py-lg-0">
+                                                                <i class="fab fa-whatsapp align-middle mr-2 icon_xs"></i>
+                                                                {{ userprofile.whatsapp|phone_number }}     
+                                                            </p>
+                                                        {% endif %}
+                                                        {% if userprofile.city %}
+                                                            <p class="mb-0 d-inline-block py-2 py-lg-0">
+                                                                <i class="fas fa-map-marker-alt align-middle mr-2 icon_xs"></i>
+                                                                {{ userprofile.city }}
+                                                            </p>
+                                                        {% endif %}
+                                                        {% if userprofile.website %}
+                                                            <p class="mb-0 d-inline-block py-2 py-lg-0">
+                                                                <i class="fas fa-globe align-middle mr-2 icon_xs"></i>
+                                                                <a href="{{ userprofile.website }}" class="text-dark" target="_blank" rel="nofollow" rel="noopener">{{ userprofile.website }}</a>
+                                                            </p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>  
+                                        </div>
+                                </div><!-- END CARD -->
+                        </div><!-- END COL -->
+                    </div><!-- END ROW -->
+
+
+                    <div class="row justify-content-md-center">
+                        {% comment %}
+                            <div class="col-12 col-lg-8">
+                                <div class="d-flex flex-column flex-lg-row bg-white justify-content-between p-3 mb-3 border border-top-0 border-right-0 border-left-0 shadow">
+                                    <p class="mb-0 d-inline-block py-2 py-lg-0">
+                                        {% if userprofile.phone %}
+                                            <i class="fas fa-phone align-middle mr-2 icon_xs"></i>
+                                            {{ userprofile.phone|phone_number }}     
+                                        {% endif %}
+                                    </p>
+                                    <p class="mb-0 d-inline-block py-2 py-lg-0">
+                                        {% if userprofile.whatsapp %}
+                                            <i class="fab fa-whatsapp align-middle mr-2 icon_xs"></i>
+                                            {{ userprofile.whatsapp|phone_number }}     
+                                        {% endif %}
+                                    </p>
+                                    <p class="mb-0 d-inline-block py-2 py-lg-0">
+                                        {% if userprofile.city %}
+                                            <i class="fas fa-map-marker-alt align-middle mr-2 icon_xs"></i>
+                                            {{ userprofile.city }}
+                                        {% endif %}
+                                    </p>
+                                    <p class="mb-0 d-inline-block py-2 py-lg-0">
+                                        {% if userprofile.website %}
+                                            <i class="fas fa-globe align-middle mr-2 icon_xs"></i>
+                                            <a href="{{ userprofile.website }}" class="text-dark">{{ userprofile.website }}</a>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                     
+                               
+                      
+                                {% if user_post_list %}
+                                    <div class="card mb-3 border-top-0 border-right-0 border-left-0">   
+                                        
+                                        <div class="p-3 text-muted">
+                                                <small>ÚlTIMAS PUBLICACIONES:</small>
+                                        </div>
+                                            <ul class="list-group list-group-flush">
+                                                {% for post in user_post_list %}
+                                                   
+                                                        <li class="list-group-item">
+                                                            <div class="" style="height: 100px; width: auto; overflow: hidden;">                                                    
+                                                              
+                                                            {% if post.image %}
+                                                                    <a href="{% url 'accounts:user_post' post.pk %}"> 
+                                                                     <img src="{{ post.image.url }}" class="img-fluid">
+                                                                    </a>
+                                                            {% else %}
+                                                                <a href="{% url 'accounts:user_post' post.pk %}"> 
+                                                                    <img src="/media/default_images/foto_.jpg" class="img-fluid">
+                                                                </a>
+                                                            {% endif %}
+                                                            
+                                                            </div>
+                                                            <a href="{% url 'accounts:user_post' post.pk %}"> 
+                                                                <small>{{ post.title|truncatewords:7 }}</small>
+                                                            </a>
+                                                        </li> 
+
+                                                {% endfor %}   
+                                            </ul>
+                                            <a href="{% url 'accounts:author_posts' userprofile.user.pk %}" 
+                                                                class="text-secondary text-center my-3"><small>Ver todas las publicaciones</small></a>
+                                    </div><!-- END CARD-->
+                                {% endif %}
+                            </div><!-- END COL-->
+                                {% endcomment %} 
+                       
+
+                            <div class="col-12 col-lg-8">
+                                {% if userprofile.description %}
+                                    <div class="card mb-3 border-top-0 border-right-0 border-left-0 shadow">
+                                            <div class="p-3 border border-top-0 border-right-0 border-left-0 text-muted">
+                                                <small>ACERCA DE MI:</small>
+                                            </div>
+                                            <div class="card-body">
+                                                    <p class="card-text">{{ userprofile.description|linebreaksbr }}</p>
+                                            </div>
+                                    </div>
+                                {% endif %}
+
+                                {% comment %}
+
+                                <div class="card mb-3 border-top-0 border-right-0 border-left-0">
+                                        <div class="p-3 border border-top-0 border-right-0 border-left-0 text-muted">
+                                            <small>FORMACIÓN PROFESIONAL:</small>
+                                        </div>
+
+                                        <div class="card-body">
+                                            {% for object in userprofile.education_set.all %}
+                                                <ul class="list-unstyled py-2 m-0">
+                                                    <li><strong> {{object.degree}} </strong></li>
+                                                    <li>{{ object.university_name }}</li>
+                                                    <li>De {{ object.from_year }} a {{ object.to_year }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </div>
+                                </div>
+
+                                <div class="card mb-3 border-top-0 border-right-0 border-left-0">
+                                        <div class="p-3 border border-top-0 border-right-0 border-left-0 text-muted">
+                                            <small>EXPERIENCIA:</small>
+                                        </div>
+
+                                        <div class="card-body">
+                                                {% for object in userprofile.experience_set.all %}
+                                                    <ul class="list-unstyled py-2 m-0">
+                                                        <li><strong> {{object.position}} </strong></li>
+                                                        <li>{{ object.company }}</li>
+                                                        <li>De {{ object.from_year }} a {{ object.to_year }}</li>
+                                                    </ul>
+                                                {% endfor %}
+                                        </div>
+                                </div>
+
+                                <div class="card mb-3 border-top-0 border-right-0 border-left-0">
+                                        <div class="p-3 border border-top-0 border-right-0 border-left-0 text-muted">
+                                            <small>IDIOMAS:</small>
+                                        </div>
+
+                                        <div class="card-body">
+                                                {% for object in userprofile.language_set.all %}  
+                                                    <ul class="list-unstyled py-2 m-0">
+                                                        <li>
+                                                            <strong>{{object.language_name}}</strong>
+                                                            <span class="ml-3">{{ object.level }}</span>
+                                                        </li>
+                                                    </ul>
+                                                {% endfor %}
+                                        </div>
+                                </div>
+
+                                <div class="card mb-3 border-top-0 border-right-0 border-left-0">
+                                        <div class="p-3 border border-top-0 border-right-0 border-left-0 text-muted">
+                                            <small>APTITUDES:</small>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <div class="row no-gutters">
+                                                {% for object in userprofile.skill_set.all %}
+                                                    <div class="col-12 col-lg-6 my-2">
+                                                        {{object.skill}}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                </div>
+
+
+                                <div class="card mb-3 border-top-0 border-right-0 border-left-0">
+                                        <div class="p-3 border border-top-0 border-right-0 border-left-0 text-muted">
+                                            <small>SOFTWARE:</small>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <div class="row no-gutters">
+                                                {% for object in userprofile.softwareskill_set.all %}
+                                                    <div class="col-12 col-lg-6 my-2">
+                                                        <i class="icon-{% filter lower|cut:" " %}{{object.software}}{% endfilter %} align-middle mr-2 icon_xs" 
+                                                        data-pack="social" data-tags="code"></i>
+                                                        {{object.software}}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                </div>
+
+                                 <div class="card mb-3 border-top-0 border-right-0 border-left-0">
+                                        <div class="p-3 border border-top-0 border-right-0 border-left-0 text-muted">
+                                            <small>SERVICIOS:</small>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <div class="row no-gutters">
+                                                {% for object in userprofile.service_set.all %}
+                                                    <div class="col-12 col-lg-6 my-2">
+                                                        {{ object.service_name }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                </div>
+
+                                <div class="card mb-3 border-top-0 border-right-0 border-left-0">
+                                        <div class="p-3 border border-top-0 border-right-0 border-left-0 text-muted">
+                                            <small>LOGROS:</small>
+                                        </div>
+
+                                        <div class="card-body">
+                                            {% for object in userprofile.accomplishment_set.all %}
+                                                <ul class="list-unstyled py-2 m-0">
+                                                    <li>
+                                                        <i class="ion-ribbon-b align-middle mr-2" 
+                                                        data-pack="social" data-tags="code" style="font-size:1.5rem;"></i>
+                                                        <strong> {{object.accomplishment}} </strong>
+                                                    </li>
+                                                    <li>{{ object.given_by }}</li>
+                                                    <li>{{ object.year }}</li>
+                                                </ul>
+                                            {% endfor %}
+                                        </div>
+                                </div>
+                                {% endcomment %}
+                            </div>
+                    </div><!-- END ROW -->
+
+            </div><!-- END CONTAINER-FLUID -->
+    </section>
+
+{% endblock content %}

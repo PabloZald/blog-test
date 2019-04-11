@@ -1,0 +1,40 @@
+<div class="d-inline-block mr-1 small">
+    {% if course.avg_rating == 4.5 %}
+        <i class="fas fa-star text-warning"></i>
+        <i class="fas fa-star text-warning"></i>
+        <i class="fas fa-star text-warning"></i>
+        <i class="fas fa-star text-warning"></i>
+        <i class="fas fa-star text-warning"></i>
+   
+    {% elif course.avg_rating >= 3.5 %}
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-black-50"></i>
+   
+    {% elif course.avg_rating >= 2.5 %}
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-black-50"></i>
+            <i class="fas fa-star text-black-50"></i>
+    
+    {% elif course.avg_rating >= 1.5 %}
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-black-50"></i>
+            <i class="fas fa-star text-black-50"></i>
+            <i class="fas fa-star text-black-50"></i>
+   
+    {% elif course.avg_rating >= 0 %}
+            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-black-50"></i>
+            <i class="fas fa-star text-black-50"></i>
+            <i class="fas fa-star text-black-50"></i>
+            <i class="fas fa-star text-black-50"></i>
+    {% endif %}
+</div>
+{% if course.avg_rating %}
+    <p class="small d-inline-block mb-0 text-black-50">{{course.avg_rating}} ({{course.rating_num}})</p>
+{% endif %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+<title>{% block title %}Video {{block.super}}{% endblock title %}</title>
+{% block content %}
+<div class='row'>
+    <div class='col-sm-6 col-sm-offset-3'>
+       
+        
+        <div class="row">
+            <h1>Please purchase to continue</h1>
+            <div class="col-sm-12">
+                <h1>{{ object.title }}</h1>
+                {{ object.description|linebreaks}}
+                {% comment %}
+                {% if not object.is_owner %} QUERYSET MANAGER IN MODEL
+                    <a href="{{object.get_purchase_url}}">Purchase</a>
+                    {{ object.price }}
+                {% endif %}
+                    {% endcomment %}
+            </div>
+        </div>    
+
+       
+    </div>
+</div>
+{% endblock content %}

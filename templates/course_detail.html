@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <!--  HOME SECTION  -->
+   
+    <header class="d-flex flex-column align-middle align-items-center text-center h-400 bg-brand py-5 shadow"  style="background: url('https://images.unsplash.com/photo-1467685790346-20bfe73a81f0?auto=format&fit=crop&w=1650&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D 1650w, ')no-repeat; 
+                                                    background-color: rgba(0, 0, 0, 0);
+                                                    background-attachment: scroll;
+                                                    background-size: auto auto;
+                                                    min-height: 458px;
+                                                    background-size: cover;
+                                                    background-attachment: fixed;">>
+        <div class="col-12 col-md-7 my-auto">
+            <h1 class="text-white d-block">Ejemplo de nombre de curso largo de dos líneas o más que escriban</h1>
+            <p class="lead text-white d-block mb-0">Médico especialista en Psiquiatría</p>
+            <i class="far fa-play-circle text-white mt-3" style="font-size:7rem;"></i>
+        </div>  
+    </header>
+{% comment %}
+    <!--  CATEGORIES SECTION  -->
+        <section id="categories-section" class="bg-light flex-grow text-muted py-5">   
+            <div class="container-fluid">
+                        
+                    <h2 class="mb-5 text-center font-weight-light">Encontrá en nuestro directorio <strong>los mejores proveedores</strong>
+                    </h2>          
+                            
+                    <div class="row" >
+                            {% for group in categories_list %}
+                                <div class="col-12 col-sm-6 col-lg-3 mb-4">
+                                    <div class="card-categories-names card card-categories-names-height border-0 card-shadow-soft text-decoration-none text-muted" href="{{ site1.get_absolute_url }}" target="_blank">
+                                        
+                                            <ul class="list-unstyled mb-0 p-3">
+                                            {% for category in group %}
+                                                <li class="p-2">
+                                                    <a href="?qr={{ category }}" class="{% if category|length > 33 %}small{% endif %}" >
+                                                        {{ category }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                            </ul>
+                                        
+                                    </div>
+                                </div>   
+                            {% endfor %}
+                    </div>
+
+                    <div class="text-center pt-3">
+                        <small class="text-muted">¿No encuentras tu categoría?</small>
+                        <a href="{% url 'contact' %}?next={{ request.path|urlencode }}" class="btn btn-outline-secondary btn-sm ml-3">Contáctanos</a>
+                    </div>            
+            </div>
+        </section>
+{% endcomment %}
+
+    <!--  OUT OF THE BOX  SECTION  -->
+</header>
+
+
+    
+
+    <!--  WEB SAMPLES SECTION  --> 
+   
+    <section id="sucursalsamples" class="bg-white flex-grow pt-6 brand-text">   
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-lg-7 my-auto my-auto pr-0">
+                            <h2 class="brand-text">Por qué tomar el curso "Ejemplo de nombre de curso de dos líneas o más que escriban"
+                            </h2>
+                            <p class="brand-text my-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fringilla in nisl id sollicitudin. Morbi mi lorem, porttitor ac condimentum vitae, lacinia eu justo. Sed nec purus erat. Nunc suscipit nunc vel massa faucibus, at finibus justo congue. Etiam sit amet tempor enim. Sed mattis sodales mauris ac pharetra. Fusce arcu lectus, pellentesque id neque a, cursus volutpat tortor. Duis nec tortor tellus. Aenean sapien dolor, molestie ac nulla et, tempor scelerisque metus. Etiam at laoreet ligula. Curabitur vehicula, lacus vel aliquet facilisis, mi sem ultricies ligula, in mattis arcu sem ac ipsum. Quisque convallis magna nec mi condimentum, quis pharetra arcu posuere.</p>
+                        {% comment %}
+                            <h2 class="brand-text mb-4 mt-6">Lo que aprenderás</h2>
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <ul class="navbar-nav brand-text">
+                                        <li class="nav-item {{ is_settings_credentials }} py-2">
+                                           <i class="fas fa-check "></i> <span class="ml-2
+                                           ">Punto 1 justificación</span>
+                                        </li>
+                                        <li class="nav-item {{ is_settings_credentials }} py-2">
+                                           <i class="fas fa-check "></i> <span class="ml-2
+                                           ">Punto 1 justificación</span>
+                                        </li>
+                                        <li class="nav-item {{ is_settings_credentials }} py-2">
+                                           <i class="fas fa-check "></i> <span class="ml-2
+                                           ">Punto 1 justificación</span>
+                                        </li>
+                                        <li class="nav-item {{ is_settings_credentials }} py-2">
+                                           <i class="fas fa-check "></i> <span class="ml-2
+                                           ">Punto 1 justificación</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item {{ is_settings_credentials }} py-2">
+                                           <i class="fas fa-check "></i> <span class="ml-2
+                                           ">Punto 1 justificación</span>
+                                        </li>
+                                        <li class="nav-item {{ is_settings_credentials }} py-2">
+                                           <i class="fas fa-check "></i> <span class="ml-2
+                                           ">Punto 1 justificación</span>
+                                        </li>
+                                        <li class="nav-item {{ is_settings_credentials }} py-2">
+                                           <i class="fas fa-check "></i> <span class="ml-2
+                                           ">Punto 1 justificación</span>
+                                        </li>
+                                        <li class="nav-item {{ is_settings_credentials }} py-2">
+                                           <i class="fas fa-check "></i> <span class="ml-2
+                                           ">Punto 1 justificación</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endcomment %}
+
+                            <h2 class="brand-text mb-4 mt-6">Contenido del curso</h2>
+
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header px-0" id="headingOne">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link text-dark" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                            <i class="fas fa-plus "></i><span class="ml-2">   
+                                            ¿Qué los diferencia?</span></button>
+                                        </h5>
+                                    </div>
+
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="list-group">
+                                          <a href="#" class="list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Bienvenida <span class="ml-auto"><i class="far fa-play-circle "></i></span></a>
+                                          <a href="#" class="list-group-item list-group-item-action border-left-0 border-left-0 border-right-0 d-flex justify-content-between align-items-center">Resumen <span class="ml-auto"><i class="far fa-play-circle "></i></span></a>
+                                          <a href="#" class="list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 1 <span class="ml-auto"><i class="fas fa-lock "></i></span></a>
+                                          <a href="#" class="list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 2 <span class="ml-auto"><i class="fas fa-lock "></i></span></a>
+                                          <a href="#" class="list-group-item list-group-item-action border-left-0 border-right-0 d-flex justify-content-between align-items-center">Lección 3 <span class="ml-auto"><i class="fas fa-lock "></i></span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header px-0" id="headingTwo">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed text-dark" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="fas fa-plus "></i><span class="ml-2">   
+                                            ¿Qué los diferencia?</span></button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                        <div class="card-body">No, en Cabalahi no tienes que preocuparte por crear, ordenar, diseñar o programar elementos. Todo está diseñado por expertos y funciona "out of the box" (de inmediato) para acelerar la ejecución de tu estrategia digital. Nuestro trabajo es poner a tu disposición todo lo que necesitas y quitar todo impedimento para acelerar la transformación digital de tu negocio.</div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header px-0" id="headingThree">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed  text-dark" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><i class="fas fa-plus "></i><span class="ml-2">   
+                                            ¿Qué los diferencia?</span></button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div class="card-body">Puedes actualizar tu contenido en el momento que quieras, inicia sesión con tu usuario y contraseña y modifica las secciones incluidas en tu plan.</div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header px-0" id="headingFour">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed  text-dark" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree"><i class="fas fa-plus "></i><span class="ml-2">   
+                                            ¿Qué los diferencia?</span></button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                        <div class="card-body">Claro, puedes contratar un Administrador de Sucursal Digital para crear y ejecutar una estrategia que acelere el retorno de tu inversión. Podemos redactar tu contenido, crear los diseños que necesites, tomar las fotografías y videos de la experiencia de tus productos o servicios, y unificar toda la comunicación en tus diferentes canales digitales.</div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header px-0" id="headingFive">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed  text-dark" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFour"><i class="fas fa-plus "></i><span class="ml-2">   
+                                            ¿Qué los diferencia?</span></button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                                        <div class="card-body">El posicionamiento en buscadores es un trabajo constante de creación, indexación de contenido y de actualización de infraestructura, entre más tiempo y reputación adquiera tu Sucursal Digital más avanzarás en las posiciones de los motores de búsqueda, y esto se traducirá en más personas encontrando tu negocio; sin embargo, tú eres libre de cancelar tu suscripción en el momento que desees sin cargo adicional. Para ampliar la información puedes leer nuestros .</div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <h2 class="brand-text mb-4 mt-6">Información del instructor</h2>
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    {% if userprofile.image %}
+                                        <img src="{{ userprofile.image.url }}" width="100%" height="auto" alt="{{ object.user_full_name }}" class="img-thumbnail rounded-circle">
+                                    {% else %}
+                                        <div class="rounded-circle bg-secondary">
+                                            <img class="img-thumbnail" src="{% static 'imagen-muestra-200px.png' %}">
+                                        </div>
+                                    {% endif %} 
+                                    <p class="my-3 text-muted"><i class="far fa-play-circle "></i><span class="ml-2">21 CURSOS</span></p>         
+                                    <p class="my-3 text-muted"><i class="far fa-file-alt "></i><span class="ml-2">VER HOJA DE VIDA</span></p>
+                                    <div>
+                                        <i class="fas fa-star text-warning small"></i> 
+                                        <p class="ml-2 d-inline-block mb-0 text-secondary small">4.5 calificación del instructor</p>
+                                    </div>                           
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <h3>Dr. José Portilo</h3>
+                                    <p class="lead">Médico especialista en psiquiatría</p>
+                                <p>
+                                    El posicionamiento en buscadores es un trabajo constante de creación, indexación de contenido y de actualización de infraestructura, entre más tiempo y reputación adquiera tu Sucursal Digital más avanzarás en las posiciones de los motores de búsqueda. <br> <br>Esto se traducirá en más personas encontrando tu negocio; sin embargo, tú eres libre de cancelar tu suscripción en el momento que desees sin cargo adicional. Para ampliar la información puedes leer nuestros que desees sin cargo adicional.
+                                </p>                            
+                                </div>
+                            </div>
+
+                            <h2 class="brand-text mb-4 mt-6">Lo que obtendrás</h2>
+                            <div class="row">
+                                <div class="col-12 ">
+                                    <p>Certificado oficial de cumplimiento del curso el cual podrás descargar e imprimir.</p>      
+                                </div>
+                                <div class="col-12">
+                                    <img class="w-100 shadow" src="{% static 'certificate-sample.png' %}">                                                  
+                                </div>
+                            </div>
+
+                            <div class="row my-7">
+                                <div class="col-12 col-md-7">
+                                    <h2 class="brand-text">Empieza ahora por solo</h2>                               
+                                    <h2 class="brand-text"><span class="text-muted mr-3"><s>$150</s></span>$29.99</h2>
+
+                                </div>
+                                <div class="col-12 col-md-5 my-auto">
+                                    <a href="" class="btn btn-primary btn-block btn-xlg shadow">Comprar por $29.99</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="row mb-7 mt-6">
+                                <div class="col-12 col-md-3 my-auto">
+                                    <h6 class="text-secondary mb-0">Pago seguro por</h6>  
+                                </div>
+                                <div class="col-12 col-md-3 my-auto">
+                                    <img class="w-100" src="{% static 'bank-transfer-logo.png' %}">  
+                                </div>
+                                <div class="col-12 col-md-3 my-auto">
+                                    <img class="w-100" src="{% static 'visa-mastercard-logo.png' %}">  
+                                </div>
+                                <div class="col-12 col-md-3 my-auto">
+                                    <img class="w-100" src="{% static 'paypal-logo.png' %}">  
+                                </div>
+                            </div>
+                        </div>      
+                        
+                    </div>
+                </div>
+               
+    </section>
+{% endblock content %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+
+
+
+
+
+

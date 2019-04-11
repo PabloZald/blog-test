@@ -1,0 +1,30 @@
+{% extends 'base_signup.html' %}
+{% block title %}Registrarse | {{ block.super }}{% endblock title %}
+{% load custom_filters %}
+{% load static %}
+
+<!-- BOOTSTRAP-DATEPICKER -->
+{% block signup_content %}
+    <div class="col-12 col-lg-5">
+        <img src="{% static 'logo-saludemy-negro.svg' %}" class="d-block mx-auto py-5">  
+        <div class="card border-0 card-shadow-soft">
+            <div class="card-body">
+                <h2 class="mb-5 mt-3 text-center">
+                    <span class="font-weight-light d-block">{{ title }}</span>
+                </h2>  
+                <form method='POST' novalidate>
+                    {% csrf_token %}
+                    {% include 'includes/form.html' %}
+                    <button type="submit" class="text-white cursor-pointer btn btn-block btn-lg btn-primary mt-4">Continuar</button>
+                </form>
+            </div>
+        </div>
+        {% if step_1 %}
+            <div class="text-center py-4">
+                <a href="{% url 'login' %}" class="text-secondary" rel="nofollow">
+                    <small>¿Ya tienes una cuenta? Inicia Sesión</small>
+                </a>                    
+            </div>
+        {% endif %}
+    </div>            
+{% endblock signup_content %}

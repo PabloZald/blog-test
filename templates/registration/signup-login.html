@@ -1,0 +1,86 @@
+{% extends 'base_signup.html' %}
+{% block title %}Registrarse | {{ block.super }}{% endblock title %}
+{% load custom_filters %}
+{% load static %}
+
+<!-- BOOTSTRAP-DATEPICKER -->
+{% block signup_content %}
+    <div class="col-12 col-lg-5">
+        <img src="{% static 'logo-saludemy-negro.svg' %}" class="d-block mx-auto py-4">  
+        <div class="card border-0 card-shadow-soft">
+            <div class="card-body">
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="signup-tab" data-toggle="tab" href="#signup" role="tab" aria-controls="signup" aria-selected="true">Registrarme</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="false">¿Ya tienes una cuenta?</a>
+                  </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="signup" role="tabpanel" aria-labelledby="signup-tab">
+                        <h2 class="my-5 text-center font-weight-light">Regístrate para continuar</h2>  
+                        <form method='POST' novalidate>
+                            {% csrf_token %}
+                            {% if signup_form.non_field_errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {% for error in signup_form.non_field_errors %}
+                                        <small><p {% if forloop.last %} class="mb-0" {% endif %}>{{ error }}</p></small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% for field in signup_form %}                
+                                <div class="form-group">
+                                    {{ field.label_tag }}
+                                    {{ field|add_validation_class }}
+                                    
+                                            
+                                    {% for error in field.errors %}
+                                        <div class="invalid-feedback">
+                                            {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <button type="submit" name="submit" class="text-white cursor-pointer btn btn-block btn-lg btn-primary mt-4" value='sign_up'>Registrarme</button>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane fade show " id="login" role="tabpanel" aria-labelledby="login-tab">
+                        <h2 class="my-5 text-center font-weight-light">Inicia sesión</h2>  
+                        <form method='POST' novalidate action="{% url 'login' %}?next={% url 'courses:detail' slug=next %}">
+                            {% csrf_token %}
+                            {% if login_form.non_field_errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {% for error in login_form.non_field_errors %}
+                                        <small><p {% if forloop.last %} class="mb-0" {% endif %}>{{ error }}</p></small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% for field in login_form %}                
+                                <div class="form-group">
+                                    {{ field.label_tag }}
+                                    {{ field|add_validation_class }}
+                                            
+                                    {% for error in field.errors %}
+                                        <div class="invalid-feedback">
+                                            {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <button type="submit" name="submit" class="text-white cursor-pointer btn btn-block btn-lg btn-primary mt-4" value='login'>Iniciar Sesión</button>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>            
+{% endblock signup_content %}

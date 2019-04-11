@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+        {% if user.is_authenticated %}
+            <!--  HOME SECTION  -->
+            <header class="bg-brand py-4 shadow" style="background:url('{% static "brand-background.svg" %}') no-repeat; background-position-x: right;
+            background-position-y: middle;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-md-7">
+                            <div class="d-flex flex-row justify-content-center justify-content-md-start">
+                                {% if user.userprofile.profile_picture %}
+                                    <a href="{{ user.userprofile.get_absolute_url }}" >
+                                        <img src="{{ user.userprofile.profile_picture.url }}" alt="{{ user.user_full_name }}" class="rounded-circle profile-no-picture-medium">
+                                    </a>
+                                {% else %}
+                                    <a href="{{ user.userprofile.get_absolute_url }}" class="text-white bg-secondary rounded-circle profile-no-picture-medium d-inline-block text-decoration-none">{% if not user.first_name %}{{user.username|slice:":1"}}{% else %}{{user.first_name|slice:":1"}}{% endif %}</a>
+                                {% endif %}
+                                <div class="ml-3 d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block">{% if not request.user.userprofile.user_full_name %}{{user.username}}{% else %}{{request.user.userprofile.user_full_name}}{% endif %}</h3>
+                                    {% if request.user.userprofile.speciality %}
+                                        <p class="small text-white d-block mb-0">{{request.user.userprofile.speciality}}</p>
+                                    {% endif %}    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <div class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">1</h3>
+                                    <p class="small text-white d-block mb-0">Cursos en progreso</p>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <a href="{% url 'courses:my-certificates' %}" class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">{{my_certificates}}</h3>
+                                    <p class="small text-white d-block mb-0">Mis <br/>certificados</p>
+                                </a>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <a href="{% url 'courses:my-courses' %}" class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">{{owned}}</h3>
+                                    <p class="small text-white d-block mb-0">Mis <br/>cursos</p>
+                                </a>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <div class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">3</h3>
+                                    <p class="small text-white d-block mb-0">Insignias <br/>obtenidas</p>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <div class="d-inline-block my-auto">
+                                    <h3 class="{% if request.user.userprofile.full_profile < 50 %}
+                                                text-danger
+                                                {% elif request.user.userprofile.full_profile < 90 %}
+                                                text-warning
+                                                {% else %}
+                                                text-success
+                                                {% endif %}
+                                    d-inline-block mb-1">{{request.user.userprofile.full_profile}}%</h3>
+                                    <p class="small text-white d-block mb-0">Perfil completo</p>
+                                </div>
+                            </div>    
+                        </div>
+                    
+                    </div>
+                </div>
+            </header>
+        {% endif %}
+{% comment %}
+    <section id="conversion" class="flex-grow mb-4 bg-white shadow py-5">   
+        <div class="container-fluid">
+            <div class="row" >        
+                <div class="col-4">
+                    <h3 class="brand-text d-inline-block">Programas y cursos</h3>
+                </div>
+                <div class="col-8">
+                    <div class="input-group w-100">
+                        <input type="search" id="search-input" placeholder="¿Qué deseas aprender?" class="form-control bg-light border-0 rounded-0 py-3" value="{% if category_name %}{{category_name}}{% endif %}" />
+                        <span class="input-group-append">
+                            <button class=" disabled btn btn-secondary" type="button">
+                                <img class="border-0 rounded-0" src="{% static 'icons/search_icon_white.svg' %}">
+                            </button>
+                        </span>
+                        <div id="search-result-container w-100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endcomment %}
+
+
+    <section id="conversion" class="flex-grow py-4" style="background: url('{% static 'homepage-texture-background.svg' %}') top/contain repeat-y;">   
+        <div class="container-fluid">
+            
+            <div class="row" >        
+                <div class="col-12 col-md-2 pl-0">
+                    <div class="d-flex flex-column px-4 bg-white shadow  py-3">
+                      <p class="mb-2 small font-weight-bold" href="#">Categorías</p>
+                      <div class="ml-3 navbar-light height-100vh">
+                        <ul class="navbar-nav">
+                          {% for c in categories_list %}
+                            <li class="nav-item {{ is_settings_credentials }}">
+                              <a class="nav-link px-0 {{ is_settings_credentials }}" href="">
+                                {{c.title}}</a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>    
+                </div>
+
+                <div class="col-12  col-md-9">
+                        <div class="row">
+                          <div class="col-9 mb-3"><h2 class="brand-text">{{title}}</h2></div>
+                          {% for course in object_list %}
+                              <div class="col-6 col-lg-4 mb-5">
+                                <a class="card border-0  grow text-decoration-none shadow h-335" href="{{course.get_absolute_url}}">
+                                  {% if course.image %}
+                                    <img class="card-img-top" src="{{course.image.url}}" alt="course.title">
+                                  {% endif %}
+                                    <div class="card-body">
+                                        <h6 class="card-title mb-2 text-dark">{{course.title}}</h6>
+                                        <p class="card-text text-black-50">{{course.user_full_name}}</p>
+                                    </div>
+                                    <div class="card-footer border-top-0 bg-transparent pt-0">
+                                            {% if course.avg_rating %}
+                                                <div class="d-inline-block mr-1 small">
+                                                    {% if course.avg_rating == 4.5 %}
+                                                        <i class="fas fa-star text-warning"></i>
+                                                        <i class="fas fa-star text-warning"></i>
+                                                        <i class="fas fa-star text-warning"></i>
+                                                        <i class="fas fa-star text-warning"></i>
+                                                        <i class="fas fa-star text-warning"></i>
+                                                   
+                                                    {% elif course.avg_rating >= 3.5 %}
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-black-50"></i>
+                                                   
+                                                    {% elif course.avg_rating >= 2.5 %}
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-black-50"></i>
+                                                            <i class="fas fa-star text-black-50"></i>
+                                                    
+                                                    {% elif course.avg_rating >= 1.5 %}
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-black-50"></i>
+                                                            <i class="fas fa-star text-black-50"></i>
+                                                            <i class="fas fa-star text-black-50"></i>
+                                                   
+                                                    {% elif course.avg_rating >= 0 %}
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-black-50"></i>
+                                                            <i class="fas fa-star text-black-50"></i>
+                                                            <i class="fas fa-star text-black-50"></i>
+                                                            <i class="fas fa-star text-black-50"></i>
+                                                    {% endif %}
+                                                </div>
+                                                <p class="small d-inline-block mb-0 text-black-50">{{course.avg_rating|floatformat:2 }} ({{course.rating_num}})</p>
+                                            {% else %}
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                            {% endif %}
+                                            {% if course.is_owner %}
+                                              <p class="d-inline-block mb-0 text-primary float-right">En curso</p>
+                                            {% elif course.is_completed %}
+                                              <p class="d-inline-block mb-0 text-secondary float-right">Completado</p>
+                                            {% else %}
+                                              {% if not course.list_price %}
+                                                <p class="d-inline-block mb-0 text-success float-right">Gratis</p>
+                                              {% else %}
+                                                     {% if course.price %}        
+                                                        <p class="d-inline-block  mb-0 text-dark float-right"><span class="text-muted mr-2"><s>${{course.price}}</s></span>${{ course.list_price }}</p>
+                                                    {% else %}
+                                                        <p class="d-inline-block  mb-0 text-dark float-right">${{course.list_price}}</p>
+                                                    {% endif %}
+                                              {% endif %}
+                                            {% endif %}
+                                    </div>
+                                </a>
+                            </div>
+                          {% endfor %}
+                        </div>
+                    </div>
+              
+            </div>
+        </div>
+    </section>
+
+    <section id="conversion" class="flex-grow bg-white shadow py-5">   
+        <div class="container-fluid">
+            <div class="row" >   
+                <div class="col-3 text-center">
+                    <img class="w-75 ml-auto" src="{% static 'icons/teaching-ad.png' %}" alt="Sucursal Digital de Paraíso Resort">
+                </div>
+                <div class="col-12 col-md-6 my-auto">
+                    <h3 class="brand-text d-inline-block">Enseña en línea</h3>
+                    <p class="mb-0">Comparte tus conocimientos y gana prestigio e ingresos extra. Contáctanos y dinos que curso o conferencia te gustaría impartir.</p>
+                </div>
+                <div class="col-12 col-md-3 my-auto">
+                    <a href="" class="btn btn-outline-primary btn-block btn-xlg mx-auto">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+{% endblock content %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+
+
+
+{% comment %}
+  nutricion en el paciente diabetico
+  cuidado hijos
+  hipertencion
+  Soporte Nutricional en paciente postquirurgico.
+  Como leer un electrocardiograma
+{% endcomment %}
+
+
+
+
+
+
+

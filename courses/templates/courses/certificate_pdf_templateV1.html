@@ -1,0 +1,98 @@
+ {% load static %}
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Name</title>
+        <style>
+        @page {
+            size: letter landscape;            
+            @frame col1_frame {
+            left: 42pt; width: 707pt; top:42pt; height: 525pt; border: 2pt solid #ede3c1; padding-top: 50px;
+            /*-pdf-frame-border: 1;    /* for debugging the layout */
+        }
+        }
+        @font-face {
+          font-family: "Roboto";
+          src: url("{% static 'fonts/Roboto-Regular.tff' %}");
+          src: url("/static/fonts/roboto.ttf");
+        }
+         @font-face {
+          font-family: "parisienne-regular";
+          src: url("{% static 'fonts/parisienne-regular.tff' %}");
+          src: url("/static/fonts/parisienne-regular.ttf");
+        }
+        h1{
+            font-size: 40px;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color:#283973!important; 
+        }
+        h2{
+           font-size: 45px;
+           font-weight: bold;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color:#8d6e4c!important;  
+            font-family: 'parisienne-regular';   
+        }
+        .text-center{
+            text-align: center;
+        }
+        p{
+           font-size: 20px;
+            margin: 20px 0;
+            padding: 0;
+            text-align: center;
+            line-height: 0px;
+            color:#8d6e4c!important;  
+        }
+        h6{
+            font-size: 40px;
+            padding: 0;
+            text-align: center;
+            line-height: 45px;
+ 
+            color:#8d6e4c!important;  
+        }
+        .logo-size{
+            width:175px;
+            height: auto;
+            display: block;
+        }
+        body {
+          font-family: "Roboto";
+        }
+        .border{
+            border: 1px solid black; 
+        }
+        .w-440{}
+        </style>
+    </head>
+    <body>
+         <table style="height:450px;  margin-top:100px;">
+            <tr style="display:block;">
+                <td style="width:440px; padding-left:15px;">
+                    <img style="height:auto;" src="{% static 'medal-certificate-saludemy.jpg' %}">
+                </td>
+                <td style="padding:30px;">
+                    <h1 class="">Certificado de cumplimiento</h1>
+                    <h2>Javier Orlando Mena Velásquez</h2>
+                    <p class="text-center">Por participar y aprobar el curso</p>
+                    <h6 class="text-center">Marketing Médico: Cómo atraer pacientes a mi clínica</h6>
+                </td>
+            </tr>
+         </table>
+         <table  style="text-align:center;  height:100px;">
+            <tr style="display:block;">
+                <td><img class="logo-size" src="{% static 'firma1-certificate.png' %}"></td>
+                <td><img class="logo-size" src="{% static 'firma2-certificate.png' %}"></td>
+                <td><img class="logo-size" src="{% static 'colegiomedicologo.png' %}"></td>
+                <td><img class="logo-size" src="{% static 'saludemygris.png' %}"></td>
+            </tr>
+        </table>
+    </body>
+</html>
+
+

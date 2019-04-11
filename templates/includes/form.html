@@ -1,0 +1,26 @@
+{% load custom_filters %}
+
+{% if form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+        {% for error in form.non_field_errors %}
+            <small><p {% if forloop.last %} class="mb-0" {% endif %}>{{ error }}</p></small>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% for field in form %}                
+    <div class="form-group">
+        {{ field.label_tag }}
+        {% if field.auto_id == 'id_city' or field.auto_id == 'id_services' %}
+            {{ field|addclass:'selectpicker form-control form-control-lg border'}}
+        {% else %}
+            {{ field|add_validation_class }}
+        {% endif %}
+                
+        {% for error in field.errors %}
+            <div class="invalid-feedback">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}

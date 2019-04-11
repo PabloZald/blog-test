@@ -1,0 +1,96 @@
+{% extends 'base_signup.html' %}
+{% block title %}Reseña | {{ block.super }}{% endblock title %}
+{% load custom_filters %}
+{% load static %}
+{% block uncritical_css %}
+<style type="text/css">
+   .rating {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    color: #ddd; /* Personal choice */
+}
+    .rating input {
+        display: none;
+    }
+    .rating label:hover,
+    .rating label:hover ~ label,
+    .rating input:checked + label,
+    .rating input:checked + label ~ label {
+        color: #ffc107; /* Personal color choice. Lifted from Bootstrap 4 */
+        cursor: pointer;
+    }
+
+
+    </style>
+{% endblock uncritical_css %}
+
+<!-- BOOTSTRAP-DATEPICKER -->
+{% block signup_content %}
+    <div class="col-12 col-lg-5">
+        <img src="{% static 'logo-saludemy-negro.svg' %}" class="d-block mx-auto py-4">  
+        <div class="card border-0 shadow mb-5">
+            <div class="p-4">
+                <h3 class="text-center">¡Felicidades! has terminado el curso:</h3>  
+                <h4 class="mb-5 font-weight-light d-block text-center">"{{course.title}}"</h4>
+                    {% comment %}
+                        
+                    <p class="mb-3 lead font-weight-light d-block text-center">Por favor deja una reseña</p>
+                    {% endcomment %}
+                <form method='POST' novalidate>
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for error in form.non_field_errors %}
+                                <small><p {% if forloop.last %} class="mb-0" {% endif %}>{{ error }}</p></small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% for field in form %}                
+                        <div class="form-group">
+                            {% if field.auto_id == 'id_comment' %}
+                                {{ field.label_tag }}
+                                {{ field|add_validation_class }}
+                            {% else %}
+                                <p class="mb-0">Calificación:</p>
+                                <div class="rating text-center" class="w-100" >
+                                    {% for radio in form.rating reversed %}{% comment %}Reversed to make stars work{% endcomment %}
+                                        {{ radio.tag }}
+                                        <label for="{{ radio.id_for_label }}"><i class="fas fa-3x fa-star"></i></label>
+                                    {% endfor %}
+                                </div>
+{% comment %}
+    
+                                <div class="rating" style="width: 20rem">
+    <input id="rating-5" type="radio" name="rating" value="5"/><label for="rating-5"><i class="fas fa-3x fa-star"></i></label>
+    <input id="rating-4" type="radio" name="rating" value="4" checked /><label for="rating-4"><i class="fas fa-3x fa-star"></i></label>
+    <input id="rating-3" type="radio" name="rating" value="3"/><label for="rating-3"><i class="fas fa-3x fa-star"></i></label>
+    <input id="rating-2" type="radio" name="rating" value="2"/><label for="rating-2"><i class="fas fa-3x fa-star"></i></label>
+    <input id="rating-1" type="radio" name="rating" value="1"/><label for="rating-1"><i class="fas fa-3x fa-star"></i></label>
+</div>
+{% endcomment %}
+                            {% endif %}
+                                    
+                            {% for error in field.errors %}
+                                <div class="invalid-feedback">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="text-white cursor-pointer btn btn-block btn-lg btn-primary mt-4">Valorar</button>
+                </form>
+            </div>
+        </div>
+       
+    </div>            
+{% endblock signup_content %}
+
+{% block javascript %}
+    <script>
+    $('.js-rating input').change(function () {
+    var $radio = $(this);
+    $('.js-rating .selected').removeClass('selected');
+    $radio.closest('label').addClass('selected');
+});</script>
+{% endblock javascript %}

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ object.title }} - Saludemy{% endblock title %}
+
+{% block content %}
+    <!--  HOME SECTION  -->
+    
+    <!-- BREADCRUMB -->
+    <section class="table-dark"  >
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 px-0">     
+                  <nav aria-label="breadcrumb" class="">
+                    <ol class="breadcrumb rounded-0 mb-0 bg-dark">
+                      <li class="breadcrumb-item"><a class="px-0 text-light" href="{% url 'courses:list' %}"><small>Inicio</small></a></li>
+                      <li class="breadcrumb-item"><a class="px-0 text-light" href="{{ object.course.get_absolute_url }}"><small>{{object.course.title}}</small></a></li>
+                      <li class="breadcrumb-item"><a class="px-0 text-light" href="{{ object.course.get_absolute_url }}"><small>{{object.topic.title}}</small></a></li>
+                      <li class="breadcrumb-item active" aria-current="page"><small>{{ object.title }}</small></li>
+                    </ol>
+
+                  </nav>
+                </div>
+                <div class="col-12">
+                    <div class="d-flex flex flex-column flex-lg-row justify-content-between align-items-center">
+                        <h4 class="text-white my-4">{{object.title}}</h4>
+                        <div class="mb-4 mb-lg-0">
+                            {% if not previous_ == none %}
+                                <a href="{{previous_.get_absolute_url}}" class="btn btn-sm btn-outline-light d-inline-block ">Anterior</a> 
+                            {% endif %}
+                            {% if not next_ %}
+                                {% if not review %}
+                                    <a href="{% url 'courses:review' course.slug %}" class="btn btn-sm btn-outline-light d-inline-block  ml-2"><i class="fas fa-star mr-1 text-warning"></i>Siguiente</a>
+                                {% else %}
+                                    <a href="{{course.get_absolute_url}}" class="btn btn-sm btn-outline-light d-inline-block  ml-2"><i class="fas fa-book mr-1"></i>Siguiente</a>
+                                {% endif %}
+                            {% else %}
+                                <a href="{{next_.get_absolute_url}}" class="btn btn-sm btn-outline-light d-inline-block  ml-2">Siguiente</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-lg-9  pl-lg-3 pr-lg-0">
+                    <div class="shadow h-100 bg-dark">
+                        {% if not course.is_owner and not object.free %}
+                            <div class=" w-100 h-100" style="background: url('{{course.image.url}}')no-repeat; 
+                                                    background-color: rgba(0, 0, 0, 0);
+                                                    background-attachment: scroll;
+                                                    background-size: auto auto;
+                                                    min-height: 458px;
+                                                    background-size: cover;
+                                                    background-attachment: fixed; position:relative;">
+                                <div class="d-flex flex-column align-items-center justify-content-center banner-dark-overlay text-center">    
+                                    <i class="fas fa-3x fa-lock mb-1"></i>
+                                    <h1>Adquiere el curso completo para continuar</h1>
+                                    <h3 class="mb-0">"{{ course.title }}"</h3>
+                                    {{ object.description|linebreaks}}
+                                    {% if course.price %}
+                                        <p class="text-white">Precio normal ${{course.list_price}}</p>
+                                        <a href="{% if user.is_authenticated %}{{course.get_purchase_url}}{%else%}{% url 'courses:signup-login' courseslug=course.slug%}{% endif %}" class="btn btn-primary  btn-xlg shadow">Comprar por ${{course.price}}</a>
+                                    {% else %}
+                                        <a href="{% if user.is_authenticated %}{{course.get_purchase_url}}{%else%}{% url 'courses:signup-login' courseslug=course.slug%}{% endif %}" class="btn btn-primary  btn-xlg shadow">Comprar por ${{course.list_price}}</a>  
+                                    {% endif %} 
+                                </div>
+                            </div>
+                        {% else %}
+                        {% comment %}
+                            <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                            {{object.video.embed_code|safe}}
+                        {% endcomment %}
+                            <video id='my-video' class='video-js embed-responsive embed-responsive-16by9 h-100 vjs-big-play-centered' controls preload='auto' poster="https://picsum.photos/1280/720?random" data-setup='{}' oncontextmenu="return false;">
+                                <source src="{{object.video.embed_code|safe}}" type="video/mp4">
+                                <source src='MY_VIDEO.webm' type='video/webm'>
+                                <p class='vjs-no-js'>Por favor, habilita JavaScript y considera actualizar tu navegador <a href='https://videojs.com/html5-video-support/' target='_blank'>a uno que soporte videos en HTML5</a></p>
+                            </video>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 pl-lg-0 ">
+                    <div class="d-flex flex-column align-items-end table-dark shadow h-video-list" style="overflow-y: auto;">
+                        <div class="list-group text-white w-100" >
+                            {% for l in lectures %}
+                                <a href="{{l.get_absolute_url}}" class="{% if l.title == object.title %}active {% else %}list-group-item-dark {% endif %}rounded-left-0 list-group-item list-group-item-action rounded-0  border-left-0 border-right-0 d-flex justify-content-between align-items-center">
+                                    {{l.title}}
+                                    <span class="ml-auto">
+                                        {% if l.title == object.title%}
+                                            <i class="far fa-play-circle "></i>
+                                        {% else %}
+                                            {% if l.was_seen  %}
+                                                <i class="fas fa-1x fa-check-double text-success"></i>
+                                            {% endif %}
+                                            {% if not l.free or course.is_owner %}
+                                                <i class="fas fa-lock"></i>
+                                            {% endif %}
+                                        {% endif %}
+                                    </span></a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    </section>
+
+</header>
+<div class="bg-brand pl-3"><p class="mb-0 text-white small py-3 text-secondary">Este video es propiedad de CORPORACIÓN CABALAHI S.A. DE C.V. Prohibida toda copia no autorizada o la reproducción fuera de Saludemy&reg;. Para más información revisa nuestros términos y condiciones de uso. La información emitida en este video no reemplaza la interacción con un profesional.</p></div>
+{% endblock content %}
+{% block uncritical_css %}
+<link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+
+<style type="text/css">.video-js .vjs-menu-button-inline.vjs-slider-active,.video-js .vjs-menu-button-inline:focus,.video-js .vjs-menu-button-inline:hover,.video-js.vjs-no-flex .vjs-menu-button-inline{width:10em}.video-js .vjs-controls-disabled .vjs-big-play-button{display:none!important}.video-js .vjs-control{width:3em}.video-js .vjs-menu-button-inline:before{width:1.5em}.vjs-menu-button-inline .vjs-menu{left:3em}.video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-button,.vjs-paused.vjs-has-started.video-js .vjs-big-play-button{display:block}.video-js .vjs-load-progress div,.vjs-seeking .vjs-big-play-button,.vjs-waiting .vjs-big-play-button{display:none!important}.video-js .vjs-mouse-display:after,.video-js .vjs-play-progress:after{padding:0 .4em .3em}.video-js.vjs-ended .vjs-loading-spinner{display:none}.video-js.vjs-ended .vjs-big-play-button{display:block!important}.video-js *,.video-js:after,.video-js:before{box-sizing:inherit;font-size:inherit;color:inherit;line-height:inherit}.video-js.vjs-fullscreen,.video-js.vjs-fullscreen .vjs-tech{width:100%!important;height:100%!important}.video-js{font-size:14px;overflow:hidden}.video-js .vjs-control{color:inherit}.video-js .vjs-menu-button-inline:hover,.video-js.vjs-no-flex .vjs-menu-button-inline{width:8.35em}.video-js .vjs-volume-menu-button.vjs-volume-menu-button-horizontal:hover .vjs-menu .vjs-menu-content{height:3em;width:6.35em}.video-js .vjs-control:focus:before,.video-js .vjs-control:hover:before{text-shadow:0 0 1em #fff,0 0 1em #fff,0 0 1em #fff}.video-js .vjs-spacer,.video-js .vjs-time-control{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;-webkit-box-flex:1 1 auto;-moz-box-flex:1 1 auto;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto}.video-js .vjs-time-control{-webkit-box-flex:0 1 auto;-moz-box-flex:0 1 auto;-webkit-flex:0 1 auto;-ms-flex:0 1 auto;flex:0 1 auto;width:auto}.video-js .vjs-time-control.vjs-time-divider{width:14px}.video-js .vjs-time-control.vjs-time-divider div{width:100%;text-align:center}.video-js .vjs-time-control.vjs-current-time{margin-left:1em}.video-js .vjs-time-control .vjs-current-time-display,.video-js .vjs-time-control .vjs-duration-display{width:100%}.video-js .vjs-time-control .vjs-current-time-display{text-align:right}.video-js .vjs-time-control .vjs-duration-display{text-align:left}.video-js .vjs-play-progress:before,.video-js .vjs-progress-control .vjs-play-progress:before,.video-js .vjs-remaining-time,.video-js .vjs-volume-level:after,.video-js .vjs-volume-level:before,.video-js.vjs-live .vjs-time-control.vjs-current-time,.video-js.vjs-live .vjs-time-control.vjs-duration,.video-js.vjs-live .vjs-time-control.vjs-time-divider,.video-js.vjs-no-flex .vjs-time-control.vjs-remaining-time{display:none}.video-js.vjs-no-flex .vjs-time-control{display:table-cell;width:4em}.video-js .vjs-progress-control{position:absolute;left:0;right:0;width:100%;height:.5em;top:-.5em}.video-js .vjs-progress-control .vjs-load-progress,.video-js .vjs-progress-control .vjs-play-progress,.video-js .vjs-progress-control .vjs-progress-holder{height:100%}.video-js .vjs-progress-control .vjs-progress-holder{margin:0}.video-js .vjs-progress-control:hover{height:1.5em;top:-1.5em}.video-js .vjs-control-bar{-webkit-transition:-webkit-transform .1s ease 0s;-moz-transition:-moz-transform .1s ease 0s;-ms-transition:-ms-transform .1s ease 0s;-o-transition:-o-transform .1s ease 0s;transition:transform .1s ease 0s}.video-js.not-hover.vjs-has-started.vjs-paused.vjs-user-active .vjs-control-bar,.video-js.not-hover.vjs-has-started.vjs-paused.vjs-user-inactive .vjs-control-bar,.video-js.not-hover.vjs-has-started.vjs-playing.vjs-user-active .vjs-control-bar,.video-js.not-hover.vjs-has-started.vjs-playing.vjs-user-inactive .vjs-control-bar,.video-js.vjs-has-started.vjs-playing.vjs-user-inactive .vjs-control-bar{visibility:visible;opacity:1;-webkit-backface-visibility:hidden;-webkit-transform:translateY(3em);-moz-transform:translateY(3em);-ms-transform:translateY(3em);-o-transform:translateY(3em);transform:translateY(3em);-webkit-transition:-webkit-transform 1s ease 0s;-moz-transition:-moz-transform 1s ease 0s;-ms-transition:-ms-transform 1s ease 0s;-o-transition:-o-transform 1s ease 0s;transition:transform 1s ease 0s}.video-js.not-hover.vjs-has-started.vjs-paused.vjs-user-active .vjs-progress-control,.video-js.not-hover.vjs-has-started.vjs-paused.vjs-user-inactive .vjs-progress-control,.video-js.not-hover.vjs-has-started.vjs-playing.vjs-user-active .vjs-progress-control,.video-js.not-hover.vjs-has-started.vjs-playing.vjs-user-inactive .vjs-progress-control,.video-js.vjs-has-started.vjs-playing.vjs-user-inactive .vjs-progress-control{height:.25em;top:-.25em;pointer-events:none;-webkit-transition:height 1s,top 1s;-moz-transition:height 1s,top 1s;-ms-transition:height 1s,top 1s;-o-transition:height 1s,top 1s;transition:height 1s,top 1s}.video-js.not-hover.vjs-has-started.vjs-paused.vjs-user-active.vjs-fullscreen .vjs-progress-control,.video-js.not-hover.vjs-has-started.vjs-paused.vjs-user-inactive.vjs-fullscreen .vjs-progress-control,.video-js.not-hover.vjs-has-started.vjs-playing.vjs-user-active.vjs-fullscreen .vjs-progress-control,.video-js.not-hover.vjs-has-started.vjs-playing.vjs-user-inactive.vjs-fullscreen .vjs-progress-control,.video-js.vjs-has-started.vjs-playing.vjs-user-inactive.vjs-fullscreen .vjs-progress-control{opacity:0;-webkit-transition:opacity 1s ease 1s;-moz-transition:opacity 1s ease 1s;-ms-transition:opacity 1s ease 1s;-o-transition:opacity 1s ease 1s;transition:opacity 1s ease 1s}.video-js.vjs-live .vjs-live-control{margin-left:1em}.video-js .vjs-big-play-button{top:50%;left:50%;margin-left:-1em;margin-top:-1em;width:2em;height:2em;line-height:2em;border:none;border-radius:50%;font-size:3.5em;background-color:rgba(0,0,0,.45);color:#fff;-webkit-transition:border-color .4s,outline .4s,background-color .4s;-moz-transition:border-color .4s,outline .4s,background-color .4s;-ms-transition:border-color .4s,outline .4s,background-color .4s;-o-transition:border-color .4s,outline .4s,background-color .4s;transition:border-color .4s,outline .4s,background-color .4s}.video-js .vjs-menu-button-popup .vjs-menu{left:-3em}.video-js .vjs-menu-button-popup .vjs-menu .vjs-menu-content{background-color:transparent;width:12em;left:-1.5em;padding-bottom:.5em}.video-js .vjs-menu-button-popup .vjs-menu .vjs-menu-item,.video-js .vjs-menu-button-popup .vjs-menu .vjs-menu-title{background-color:#151b17;margin:.3em 0;padding:.5em;border-radius:.3em}.video-js .vjs-menu-button-popup .vjs-menu .vjs-menu-item.vjs-selected{background-color:#2483d5}.video-js .vjs-big-play-button{background-color:rgba(255,255,255,.1);font-size:6em;border-radius:50%;height:2em!important;line-height:2em!important;margin-top:-1em!important}.video-js .vjs-big-play-button:active,.video-js .vjs-big-play-button:focus,.video-js:hover .vjs-big-play-button{background-color:rgba(255,255,255,.23)}.video-js .vjs-loading-spinner{border-color:rgba(255,255,255,.7)}.video-js .vjs-control-bar2{background-color:#fcfcfc}.video-js .vjs-control-bar{background-color:rgba(252,252,252,.19)!important;color:#fff;font-size:16px}.video-js .vjs-play-progress,.video-js .vjs-volume-level{background-color:#ccc}button {outline: none!important;}.vjs-big-play-button {outline: none!important;}</style>
+{% endblock uncritical_css %}  
+{% block javascript %}
+<script src='https://vjs.zencdn.net/7.4.1/video.js'></script>
+<script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+{% endblock javascript %}
+
+
+
+
+
+
+

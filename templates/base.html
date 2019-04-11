@@ -1,0 +1,280 @@
+{% spaceless %} {% comment %}Removes whitespace between HTML tags{% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Cabalahi">
+    <title>{% block title %}Saludemy - Cursos de salud y bienestar impartidos por expertos{% endblock title %}</title>
+        <meta property="og:site_name" content="Cabalahi">
+        <meta property="og:type" content="website" />
+    {% block header_meta_tags %}        
+        <meta name="keywords" content="">
+        <meta name="description" content="Una web de última generación con las tecnologías para vender más.">
+        <meta property="og:title" content="Vende más abriendo tu Sucursal Digital" />
+        <meta property="og:description" content="Una web de última generación con las tecnologías para vender más." />
+        <meta property="og:image" content="{% static 'img/cabalahi-image-meta.min.png' %}" />
+         <meta property="og:image:url" content="{% static 'img/cabalahi-image-meta.min.png' %}" />
+        <meta property="og:url" content="{{DEFAULT_CABALAHI_PROTOCOL}}{{DEFAULT_CABALAHI_DOMAIN}}{{request.get_full_path}}" />
+        <!-- TWITTER GRAPH DATA -->
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta property="twitter:image" content="{% static 'img/cabalahi-image-meta.min.png' %}" />
+        <meta name="twitter:title" content="Vende más abriendo tu Sucursal Digital">
+        <meta name="twitter:description" content="Una web de última generación con las tecnologías para vender más.">
+    {% endblock header_meta_tags %}
+    <link rel="canonical" href="{{DEFAULT_CABALAHI_PROTOCOL}}{{DEFAULT_CABALAHI_DOMAIN}}{{request.get_full_path}}" />
+    <!-- PROGREsSIVE WEB APP -->
+    <meta name="theme-color" content="#000"/>
+    <link rel="manifest" href="/manifest.json">
+    {% comment %}
+    <!-- FACEBOOK APP_ID -->
+    <meta property="fb:app_id" content="" /> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">   
+    {% endcomment %}
+    <link rel="shortcut icon" sizes="196x196" href="{% static 'icons/saludemy_icon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'icons/saludemy_icon.png' %}">
+     <!-- CSS -->
+        {% comment %}USING MINIFIED VERSION OF STYLE.CSS{% endcomment %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}?v=122">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    {% comment %}
+    {% block preload_static %}{% endblock preload_static %}
+    {% endcomment %}
+    {% comment %}
+    <!-- Facebook Pixel Code -->
+        <script>
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '268820930619860');
+          fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+          src="https://www.facebook.com/tr?id=268820930619860&ev=PageView&noscript=1"
+        /></noscript>
+    <!-- End Facebook Pixel Code -->
+    {% endcomment %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132482257-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-132482257-1');
+        </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->  
+</head>
+    
+    {% block body %}
+        <body id="page-top" class="bg-light">    
+    {% endblock body %}
+
+        {% block message %}
+                {% if messages %}
+                    <div style="width: 100%; position: absolute; z-index: 100; top:65px;">
+                        {% for message in messages %}
+                            <div class="alert alert-{% if message.tags %}{{message.tags}}{% endif %} alert-dismissible fade show text-center mb-0 rounded-0" role="alert">
+                                <span class="d-inline-block mb-0 align-middle mr-md-2 mb-3 mb-md-0">{{ message|safe }}</span>
+                                <button type="button" class="btn btn-sm btn-outline-primary mr-2" data-dismiss="alert" aria-label="Close">Entendido</button>
+                            </div>
+                        {% endfor %}                          
+                    </div>   
+                {% endif %}
+        {% endblock message %}
+
+        {% block navbar %}
+            <!-- NAVBAR -->
+            {% block sm_navbar_toggle %}
+               {#  <nav class="navbar navbar-expand-lg navbar-dark table-dark fixed-top"> #}
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark-navbar">
+            {% endblock sm_navbar_toggle %}
+                
+                    <a class="navbar-brand d-flex align-items-center" {% if user.is_authenticated %}href="{% url 'courses:list' %}"{% else %}href="{% url 'home' %}"{% endif %}>
+                        {% comment %}
+                        <img src="{% static 'img/logo-cabalahi.svg' %}" width='175' alt="Logo de Cabalahi">
+                        {% endcomment %}
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="40" width="175"><defs><linearGradient xlink:href="#a" id="b" gradientUnits="userSpaceOnUse" x1="7329.992" y1="-3500.126" x2="7442.859" y2="-3626.204"/><linearGradient id="a"><stop offset="0" stop-color="#00c3e2"/><stop offset=".27" stop-color="#415dbc"/><stop offset="1" stop-color="#415dbc"/></linearGradient></defs><g transform="matrix(.3464 0 0 .3464 -2538.393 1255.326)"><rect ry="13.297" rx="13.297" y="-3623.946" x="7327.977" height="115.474" width="115.474" fill="url(#b)"/><path d="M7385.01-3614.453a7.421 7.421 0 0 0-7.42 7.42 7.421 7.421 0 0 0 3.513 6.3v5.251c-12.971 1.299-22.031 7.856-22.031 19.638 0 23.782 35.802 17.295 35.802 26.722 0 2.94-3.372 4.583-8.474 4.583-1.989 0-4.152-.518-5.795-1.555-1.73-1.038-2.941-2.683-3.374-4.931h-19.542c.394 10.26 9.362 19.147 23.414 20.623v9.52c0 5.658 8.298 5.754 8.298 0V-3530.345c14.889-1.066 25.018-8.037 25.018-21.284 0-22.658-35.804-16.865-35.804-26.205 0-2.249 1.99-3.545 6.486-3.545 1.99 0 3.806.347 5.276 1.125 1.47.778 2.595 2.076 2.941 4.238h19.372c-1.372-10.166-8.318-18.523-23.289-19.598v-5.446a7.421 7.421 0 0 0 3.032-5.973 7.421 7.421 0 0 0-7.423-7.42zm15.878 27.341a2.244 2.244 0 0 1 2.244 2.244 2.244 2.244 0 0 1-2.244 2.245 2.244 2.244 0 0 1-2.242-2.245 2.244 2.244 0 0 1 2.242-2.244z" style="line-height:97.00000286%" font-weight="400" font-size="55.924" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#fff"/></g><g style="line-height:97.00000286%" font-weight="900" font-size="46.622" font-family="Helvetica Black" letter-spacing="-.986" word-spacing="0" fill="#fff"><path d="M67.507 14.503c-.406-3.005-2.576-5.437-7.345-5.437-4.293 0-7.44 1.836-7.44 5.485 0 6.558 9.872 4.77 9.872 7.369 0 .81-.93 1.264-2.337 1.264-.548 0-1.145-.143-1.598-.43-.477-.286-.81-.739-.93-1.359h-5.39c.12 3.1 3.077 5.747 7.608 5.747 4.722 0 8.037-1.931 8.037-5.914 0-6.248-9.873-4.65-9.873-7.226 0-.62.548-.977 1.788-.977.549 0 1.05.095 1.455.31.405.214.715.572.81 1.168h5.343zM83.401 26.69v-.24c-.644-.524-.668-.882-.668-1.597V19.01c0-2.98-.357-5.174-6.271-5.174-4.937 0-6.82 1.55-6.82 4.197h4.769c.119-1.073 1.049-1.217 1.74-1.217.525 0 1.622.12 1.622 1.026 0 2.337-8.895-.239-8.895 5.437 0 2.6 2.099 3.768 4.46 3.768 1.86 0 3.29-.382 4.698-1.693l.238 1.335h5.127zm-7.822-2.457c-.977 0-1.574-.43-1.574-1.05 0-1.621 2.147-1.24 3.768-2.026.12 1.717-.453 3.076-2.194 3.076zM90.146 26.69V9.52h-4.96v17.17h4.96zM105.905 14.193h-4.96v6.01c0 1.931-.453 3.004-1.884 3.004-1.192 0-1.789-.548-1.789-2.265v-6.749h-4.96V21.8c0 3.578 1.765 5.247 4.484 5.247 2.05 0 3.267-.477 4.507-2.194v1.836h4.602V14.193zM121.354 26.69V9.52h-4.96v5.937c-1.05-1.24-2.146-1.621-3.72-1.621-2.981 0-5.294 2.694-5.294 6.844 0 3.53 1.907 6.367 5.675 6.367 1.598 0 2.671-.5 3.84-2.027v1.67h4.46zm-7.059-3.22c-1.621 0-1.955-1.526-1.955-2.838 0-1.383.453-2.957 2.098-2.957 1.646 0 2.123 1.502 2.123 2.885 0 1.455-.549 2.91-2.266 2.91zM127.717 19.034c0-1.335.835-2.17 2.313-2.17 1.169 0 2.194 1.026 2.194 2.17h-4.507zm9.468 2.528c.071-4.531-2.719-7.726-7.345-7.726-4.007 0-7.083 2.623-7.083 6.724 0 4.198 3.1 6.487 7.107 6.487 2.909 0 6.057-1.026 6.915-4.126h-4.745c-.358.74-1.074 1.097-1.86 1.097-1.312 0-2.457-.977-2.457-2.456h9.468zM138.47 26.69h4.96v-6.177c0-1.503.286-2.767 1.74-2.767 1.312 0 1.67.74 1.67 2.576v6.367h4.96v-6.176c0-1.503.286-2.767 1.74-2.767 1.312 0 1.67.74 1.67 2.576v6.367h4.96v-7.392c0-3.41-1.144-5.461-4.793-5.461-1.836 0-3.243.786-4.316 2.289-.596-1.336-1.836-2.29-4.078-2.29-1.789 0-3.339 1.264-3.959 2.218v-1.86h-4.555V26.69zM165.867 14.193h-4.985l4.102 11.375c.501 1.383.143 1.837-1.407 1.837-.334 0-.668-.024-1.025-.024v3.458c.381 0 1.288.095 2.194.095 4.411 0 4.936-1.216 6.248-5.08L175 14.195h-4.77l-2.17 7.702-2.193-7.703z" style="-inkscape-font-specification:'Helvetica Black, Heavy'"/></g></svg>
+                    </a>
+                    <button class="navbar-toggler mr-2" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+                    </button>
+
+                 
+                    <div class="collapse navbar-collapse justify-content-end" id="mainMenu">
+                   
+                    <div class="input-group d-flex mt-3 mt-lg-0 mr-3 seach-bar">
+                        <input type="search" id="search-input" placeholder="¿Qué deseas aprender?" class="form-control bg-light border-0 rounded-0" value="{% if category_name %}{{category_name}}{% endif %}" />
+                        <span class="input-group-append">
+                            <button class=" disabled btn btn-secondary" type="button">
+                                <img class="border-0 rounded-0" src="{% static 'icons/search_icon_white.svg' %}">
+                            </button>
+                        </span>
+                        <div id="search-result-container w-100%"></div>
+                    </div>
+                   
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link {% if service_web %} text-light {% endif %}" href="{% url 'courses:list'%}">Cursos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if digital_ads %} text-light {% endif %}" href="">Instructores</a>
+                            </li>
+                                                              
+                            <li class="nav-item">
+                                <a class="nav-link {% if digital_ads %} text-light {% endif %}" href="">Congresos</a>
+                            </li>
+                             
+                            {% if user.is_authenticated %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle d-inline" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {% if user.userprofile.profile_picture %}
+                                                <img src="{{ user.userprofile.profile_picture.url }}" alt="{{ user.user_full_name }}" class="mr-1 rounded-circle profile-no-picture-small">
+                                            {% else %}
+                                                <div href="#" class="text-white mr-1 bg-secondary rounded-circle profile-no-picture-small d-inline-block text-decoration-none">{{user.username|slice:":1"}}</div>
+                                            {% endif %}
+                                            {{ user.first_name }}
+                                        </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                                        <a class="dropdown-item" href="{% url 'accounts:profile' slug=request.user.userprofile.slug %}">Ver mi Perfil</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{% url 'accounts:settings_account' %}">Configuración</a>
+                                        {% comment %}
+                                            
+                                        <a class="dropdown-item" href="{% url 'courses:list' %}">Cursos</a>
+                                        {% endcomment %}
+                                        <a class="dropdown-item" href="{% url 'courses:my-courses' %}">Mis Cursos</a>
+                                        <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
+                                    </div>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link " href="{% url 'login' %}" rel="nofollow">Iniciar Sesión</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-outline-primary" href="{% url 'signup' %}" rel="nofollow">Registrarme</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+            </nav><!-- END NAVBAR -->
+        {% endblock navbar %}
+
+    
+        {% block content %}
+        {% endblock content%}
+        
+        
+        {% block footer %}<!-- MAIN FOOTER -->
+            
+            {% block footer_fixed_bottom_toggle %}           
+            <footer id="main-footer" class="bg-dark-navbar text-white py-5">
+            {% endblock footer_fixed_bottom_toggle %}
+
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <div class="col-12 col-lg-2 text-center text-lg-left pb-4 pb-lg-0">
+                            <p class="text-white">Conéctate</p>
+                            <a href="{% url 'home' %}" class="d-inline text-white">
+                                <img src="{% static 'icons/facebook-white-icon.svg' %}" aria-label="Ir hacia arriba" class="d-inline">
+                            </a>
+                            <a href="{% url 'home' %}" class="d-inline text-white ml-3">
+                                <img src="{% static 'icons/instagram-white-icon.svg' %}" aria-label="Ir hacia arriba" class="d-inline">
+                            </a>
+                            <a href="{% url 'home' %}" class="d-inline text-white ml-3">
+                                <img src="{% static 'icons/youtube-white-icon.svg' %}" aria-label="Ir hacia arriba" class="d-inline">
+                            </a>
+                        </div>
+                        <div class="col-12 col-lg-2 text-center text-lg-left">
+                            <a href="#" class="text-white"><small>Nosotros</small></a>
+                            <a href="{% url 'home' %}" class="d-block text-white"><small>Cursos</small></a>
+                            <a href="" class="d-block text-white"><small>Tutores</small></a>
+                            <a href="" class="d-block text-white"><small>Certificados</small></a>
+                        </div>
+                        <div class="col-12 col-lg-2 text-center text-lg-left">
+                            <a href="{% url 'home' %}" class="d-inline-block text-white"><small>Congresos</small></a>
+                            <a href="" class="d-block text-white" rel="nofollow"><small>Términos y Condiciones</small></a>
+                            <a href="" class="d-block text-white"><small>Ayuda</small></a>
+                            <a href="" class="d-block text-white"><small>Contáctanos</small></a>
+                        </div>
+   
+                        <div class="col-12 col-lg-4 offset-lg-2 text-center">
+                            <a href="#"  class="d-block js-scroll-top mx-auto mb-3 mt-4 mt-lg-0">
+                                <img src="{% static 'logo-saludemy-blanco.svg' %}" aria-label="Ir hacia arriba" class="d-block mx-auto">
+                            </a>
+                            <p class="text-white mb-3 text-center">Formación online en salud y bienestar</p>
+                            <p class="my-0 d-block pb-4 pb-lg-0">
+                                <small>Saludemy es una marca registrada de CORPORACIÓN CABALAHI S.A. DE C.V. &copy; {% now "Y" %}. Derechos reservados.</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        {% endblock footer %}                          
+       
+        {% block uncritical_css %}{% endblock uncritical_css %}
+        <!-- JQUERY CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- POPPER CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <!-- BOOTSTRAP 4 CDN -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+        {% comment %}
+        <!-- CROPPER CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/3.1.3/cropper.min.js" type="text/javascript"></script>
+        {% endcomment %}
+        <!-- SCROLL TO TOP --> 
+        <script>$('.js-scroll-top').click(function(){$("html, body").animate({ scrollTop: $("#page-top").offset().top - 54 }, 1000);});</script>
+
+         <!-- SEARCH BAR FOR HOME -->
+        {% comment %}
+        // <script>
+        //     $('#search-input').keyup(function (event) {
+        //       if( this.value.length <2 ) return; // Start firing code after 2 letters
+        //       var query =($("#search-input").val());
+
+        //       if (query != '' || query != ' ') {
+        //         $.ajax({
+        //            type: 'GET',
+        //            url: '{% url "search" %}',
+        //            data: {
+        //              'csrfmiddlewaretoken': '{{ csrf_token }}',
+        //              'q': query
+        //            },
+        //            success: function(data) {
+        //                 setTimeout(function(){
+        //                 $('#search-result-container').html(data);
+        //                 }, 500);
+        //            },
+        //            error: function(data) {
+        //               console.log(data);
+        //            }
+        //          });
+        //       }
+        //     });
+
+        //     // Removing the element after search
+        //     // and when user clicked another/outside of this element below.
+
+        //     $(document).click(function(event) {
+        //       $is_inside = $(event.target).closest('#search-result-container').length;
+
+        //       if( event.target.id == 'search-input' || $is_inside ) {
+        //         return;
+        //       } else {
+        //         $('#search-result').remove();
+        //       }
+        //     });
+        // </script>
+    {% endcomment %}
+    {% block javascript %}{% endblock javascript %}
+</body>
+</html>
+{% endspaceless %}

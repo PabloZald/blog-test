@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+        {% if user.is_authenticated %}
+            <!--  HOME SECTION  -->
+            <header class="bg-brand py-4 shadow" style="background:url('{% static "brand-background.svg" %}') no-repeat; background-position-x: right;
+            background-position-y: middle;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-md-7">
+                            <div class="d-flex flex-row justify-content-center justify-content-md-start">
+                                {% if user.userprofile.profile_picture %}
+                                    <a href="{{ user.userprofile.get_absolute_url }}" >
+                                        <img src="{{ user.userprofile.profile_picture.url }}" alt="{{ user.user_full_name }}" class="rounded-circle profile-no-picture-medium">
+                                    </a>
+                                {% else %}
+                                    <a href="{{ user.userprofile.get_absolute_url }}" class="text-white bg-secondary rounded-circle profile-no-picture-medium d-inline-block text-decoration-none">{% if not user.first_name %}{{user.username|slice:":1"}}{% else %}{{user.first_name|slice:":1"}}{% endif %}</a>
+                                {% endif %}
+                                <div class="ml-3 d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block">{% if not request.user.userprofile.user_full_name %}{{user.username}}{% else %}{{request.user.userprofile.user_full_name}}{% endif %}</h3>
+                                    {% if request.user.userprofile.speciality %}
+                                        <p class="small text-white d-block mb-0">{{request.user.userprofile.speciality}}</p>
+                                    {% endif %}    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <div class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">1</h3>
+                                    <p class="small text-white d-block mb-0">Cursos en progreso</p>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <a href="{% url 'courses:my-certificates' %}" class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">{{my_certificates}}</h3>
+                                    <p class="small text-white d-block mb-0">Mis <br/>certificados</p>
+                                </a>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <a href="{% url 'courses:my-courses' %}" class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">{{owned}}</h3>
+                                    <p class="small text-white d-block mb-0">Mis <br/>cursos</p>
+                                </a>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <div class="d-inline-block my-auto">
+                                    <h3 class="text-white d-inline-block mb-1">3</h3>
+                                    <p class="small text-white d-block mb-0">Insignias <br/>obtenidas</p>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="col-md-1">
+                            <div class="text-center pt-2">
+                                <div class="d-inline-block my-auto">
+                                    <h3 class="{% if request.user.userprofile.full_profile < 50 %}
+                                                text-danger
+                                                {% elif request.user.userprofile.full_profile < 90 %}
+                                                text-warning
+                                                {% else %}
+                                                text-success
+                                                {% endif %}
+                                    d-inline-block mb-1">{{request.user.userprofile.full_profile}}%</h3>
+                                    <p class="small text-white d-block mb-0">Perfil completo</p>
+                                </div>
+                            </div>    
+                        </div>
+                    
+                    </div>
+                </div>
+            </header>
+        {% endif %}
+{% comment %}
+    <section id="conversion" class="flex-grow mb-4 bg-white shadow py-5">   
+        <div class="container-fluid">
+            <div class="row" >        
+                <div class="col-4">
+                    <h3 class="brand-text d-inline-block">Programas y cursos</h3>
+                </div>
+                <div class="col-8">
+                    <div class="input-group w-100">
+                        <input type="search" id="search-input" placeholder="¿Qué deseas aprender?" class="form-control bg-light border-0 rounded-0 py-3" value="{% if category_name %}{{category_name}}{% endif %}" />
+                        <span class="input-group-append">
+                            <button class=" disabled btn btn-secondary" type="button">
+                                <img class="border-0 rounded-0" src="{% static 'icons/search_icon_white.svg' %}">
+                            </button>
+                        </span>
+                        <div id="search-result-container w-100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endcomment %}
+
+
+    <section id="conversion" class="flex-grow py-4" style="background: url('{% static 'homepage-texture-background.svg' %}') top/contain repeat-y;">   
+        <div class="container-fluid">
+            <div class="row" >        
+                <div class="col-12 mb-3"><h2 class="brand-text">{{title}}</h2></div>
+                {% for obj in object_list %}
+                    <div class="col-6 col-lg-4 mb-5">
+                        <div class="card border-0 text-decoration-none shadow" >
+                            <div class="d-flex flex-column align-items-center text-center align-middle bg-brand h-200 w-100 px-3" 
+                            style="background:url('{% static "brand-background.svg" %}') no-repeat; background-position-x: right;
+            background-position-y: bottom;">
+                                <div class="my-auto text-white">
+                                    <i class="fas fa-2x fa-trophy mb-3"></i>
+                                    <h5 class="">{{obj.course}}</h5>
+                                </div>
+                            </div>
+                          
+                            <div class="d-flex flex-row justify-content-between card-body">
+                                <a href="{% url 'courses:show-certificate' slug=obj.course.slug %}" class="btn btn-outline-secondary btn-sm" target="_blank" rel="noopener">Ver certificado</a>
+                                <a href="{% url 'courses:show-certificate' slug=obj.course.slug %}?download=true" class="btn btn-outline-secondary btn-sm">Descargar certificado</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section id="conversion" class="flex-grow bg-white shadow py-5">   
+        <div class="container-fluid">
+            <div class="row" >   
+                <div class="col-3 text-center">
+                    <img class="w-75 ml-auto" src="{% static 'icons/teaching-ad.png' %}" alt="Sucursal Digital de Paraíso Resort">
+                </div>
+                <div class="col-12 col-md-6 my-auto">
+                    <h3 class="brand-text d-inline-block">Enseña en línea</h3>
+                    <p class="mb-0">Comparte tus conocimientos y gana prestigio e ingresos extra. Contáctanos y dinos que curso o conferencia te gustaría impartir.</p>
+                </div>
+                <div class="col-12 col-md-3 my-auto">
+                    <a href="" class="btn btn-outline-primary btn-block btn-xlg mx-auto">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+{% endblock content %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+
+
+
+{% comment %}
+  nutricion en el paciente diabetico
+  cuidado hijos
+  hipertencion
+  Soporte Nutricional en paciente postquirurgico.
+  Como leer un electrocardiograma
+{% endcomment %}
+
+
+
+
+
+
+
